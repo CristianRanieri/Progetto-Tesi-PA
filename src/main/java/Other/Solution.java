@@ -46,45 +46,7 @@ public class Solution {
 
 
 
-
-
-    public void transformSolution(Point[] range,int[] transform, int dimGrph){
-        boolean nodeChange1;
-        boolean nodeChange2;
-
-        // Porto le etichette dei nodi nella loro forma estesa
-        for(Edge edge: edges){
-            edge.node1=transform[edge.node1];
-            edge.node2=transform[edge.node2];
-        }
-
-        // Sostituisco i nodi estesi con il loro nodo associato
-        for(Edge edge: edges) {
-            nodeChange1= false;
-            nodeChange2= false;
-
-            for (int i = 0; i < dimGrph; i++) {
-                if (range[i] != null && edge.node1 >= range[i].x && edge.node1 <= range[i].y && !nodeChange1) {
-                    edge.node1 = i;
-                    nodeChange1=true;
-                }
-                if (range[i] != null &&  edge.node2 >= range[i].x && edge.node2 <= range[i].y && !nodeChange2) {
-                    edge.node2 = i;
-                    nodeChange2=true;
-                }
-            }
-        }
-
-        // Rimuovo gli tra due nodi uguali
-        edges= new ArrayList<>( edges.stream().filter(x-> x.node1!=x.node2).toList());
-
-        System.out.println("Valore pre trasformazione:"+value);
-        value= edges.stream().map(x-> x.weight).reduce(0, Integer::sum);
-        System.out.println("Valore post trasformazione:"+value);
-    }
-
-
-    public Solution[] transformSolution2(Point[] range,int[] transform, int numNode, int numC, int dimGraph){
+    public Solution[] transformSolution(Point[] range,int[] transform, int numNode, int numC, int dimGraph){
         Solution[] solutionTrans= new Solution[numC];
         for(int i=0;i<numC;i++)
             solutionTrans[i]= new Solution();

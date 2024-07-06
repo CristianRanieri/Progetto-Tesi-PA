@@ -173,26 +173,17 @@ public class MainTest {
         Sbest.setValue(Integer.MAX_VALUE);
 
 
-        RGP rgp= new RGP(NC,CS,Sbest,Cmax,edges,3);
+        RGP rgp= new RGP(NC,CS,Sbest,Cmax,edges,numClusters);
         Solution S=rgp.run();
 
         System.out.println(S);
 
-        Solution[] solutionTrans=S.transformSolution2(addNode, transform,graphOptimalPath.V,numClusters, dimGrph);
+        Solution[] solutionTrans=S.transformSolution(addNode, transform,graphOptimalPath.V,numClusters, dimGrph);
 
         for(Solution s: solutionTrans)
             System.out.println("sol= "+s);
 
-        /*
-        // pre trasformale la soluzione per il grafo iniziale
-        int x=transform[14];
-        System.out.println(x);
-        for(int i=0; i<dimGrph; i++){
-            if(addNode[i]!=null && addNode[i].x>= x && addNode[i].y<= x)
-                System.out.println(i);
-        }
 
-         */
     }
 
 }
