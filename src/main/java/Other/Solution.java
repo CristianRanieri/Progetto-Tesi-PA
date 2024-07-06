@@ -170,7 +170,7 @@ public class Solution {
         System.out.println("Soluzione post trasformazioe");
 
         // pre trasformale la soluzione per il grafo iniziale
-        ArrayList<Integer>[] sequenceSolTra = new ArrayList[numC];
+        ArrayList<Point>[] sequenceSolTra = new ArrayList[numC];
         ArrayList<Integer> remove;
 
         for(int i=0;i<numC;i++) {
@@ -187,26 +187,33 @@ public class Solution {
                     if (range[j] != null && !added)
                         if (x >= range[j].x && x <= range[j].y)
                             if (!remove.contains(j)) {
-                                sequenceSolTra[i].add(j);
+                                sequenceSolTra[i].add(new Point(j,1));
                                 remove.add(j);
                                 added=true;
+                            }else {
+                                int finalJ = j;
+                                sequenceSolTra[i].stream().filter(y-> y.x== finalJ).findFirst().get().y+=1;
                             }
                 }
 
                 if(!added){
-                    if (!remove.contains(x) && x < dimGraph) {
-                        sequenceSolTra[i].add(x);
-                        remove.add(x);
+                    if (!remove.contains(x)) {
+                        if(x < dimGraph) {
+                            sequenceSolTra[i].add(new Point(x, 1));
+                            remove.add(x);
+                        }
+                    }else {
+                        sequenceSolTra[i].stream().filter(y-> y.x== x).findFirst().get().y+=1;
                     }
                 }
             }
-            sequenceSolTra[i].add(0);
+            sequenceSolTra[i].add(new Point(0,1));
         }
 
-        for(ArrayList<Integer> arrayList: sequenceSolTra){
+        for(ArrayList<Point> arrayList: sequenceSolTra){
             System.out.println();
-            for(Integer i: arrayList){
-                System.out.print(" "+i+"-");
+            for(Point i: arrayList){
+                System.out.print(" ["+i.x+","+i.y+"]-");
             }
         }
         System.out.println();
