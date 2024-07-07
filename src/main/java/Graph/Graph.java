@@ -150,6 +150,8 @@ public class Graph {
 
     // Restituisce il valore del cammino minimo dal nodo start a end
     public int optimalValueDijkstra(int start, int end){
+        if(start==end)
+            return 0;
         int[] father = dijkstra(start,end);
         return father[V];
     }
@@ -439,7 +441,7 @@ public class Graph {
 
                         // Aggiungo tutti gli archi verso il nodo n,lable pure a pos+j
                         for(EdgeLinkedList edge : this.adjList[n.label])
-                            if(this.adjList[pos+j].stream().filter(x -> x.destination==edge.destination).toList().isEmpty())
+                            if(this.adjList[pos+j].stream().filter(x -> x.destination==edge.destination).toList().isEmpty() && edge.destination!=pos+j)
                                 this.adjList[pos+j].add(edge);
 
                         lastNode=pos+j;

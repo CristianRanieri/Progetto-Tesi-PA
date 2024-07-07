@@ -46,7 +46,7 @@ public class Solution {
 
 
 
-    public Solution[] transformSolution(Point[] range,int[] transform, int numNode, int numC, int dimGraph){
+    public ArrayList<Point>[] transformSolution(Point[] range,int[] transform, int numNode, int numC, int dimGraph){
         Solution[] solutionTrans= new Solution[numC];
         for(int i=0;i<numC;i++)
             solutionTrans[i]= new Solution();
@@ -180,7 +180,27 @@ public class Solution {
         }
         System.out.println();
 
-        return solutionTrans;
+        return sequenceSolTra;
+    }
+
+    public static float valueSolutionTransformed(ArrayList<Point>[] solution, ArrayList<Edge> edges){
+        float val=0;
+        int nodePrec;
+        int nodeNext;
+
+        for(int i=0;i<solution.length;i++){
+            nodePrec= 0;
+            for(int j=1;j<solution[i].size();j++){
+                nodeNext=(int) solution[i].get(j).getX();
+                int finalNodeNext = nodeNext;
+                int finalNodePrec = nodePrec;
+                System.out.print(" ["+nodePrec+", "+nodeNext+"] ");
+                val+=edges.stream().filter(e -> e.equals(new Edge(finalNodePrec, finalNodeNext,0))).findFirst().get().weight;
+                nodePrec=nodeNext;
+            }
+        }
+
+        return val;
     }
 
 }

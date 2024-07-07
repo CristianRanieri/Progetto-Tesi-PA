@@ -1,6 +1,6 @@
 package Graph;
 
-public class Edge {
+public class Edge implements Cloneable{
     public int node1;
     public int node2;
     public int weight;
@@ -49,6 +49,11 @@ public class Edge {
         if (o == null || getClass() != o.getClass()) return false;
         Edge edge = (Edge) o;
         return (node1 == edge.node1 && node2 == edge.node2) || (node1 == edge.node2 && node2 == edge.node1);
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }

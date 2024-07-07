@@ -13,6 +13,7 @@ public class MainTest {
     public static void main(String args[]) throws CloneNotSupportedException {
         // Lista dei nodi
         ArrayList<Node> nodeList = new ArrayList<>();
+        //ArrayList<Node> nodeListCopy = new ArrayList<>();
 
         // Creazione dei nodi
         Node node0 = new Node(0, -1, 1.0, 2.0);
@@ -26,6 +27,20 @@ public class MainTest {
         Node node8 = new Node(8, 0, 91.0, 3.);
         Node node9 = new Node(9, 1, 12.1,5.7);
         Node node10 = new Node(10, 1, 4.2,1.4);
+
+        /*
+        nodeListCopy.add((Node)node0.clone());
+        nodeListCopy.add((Node)node1.clone());
+        nodeListCopy.add((Node)node2.clone());
+        nodeListCopy.add((Node)node3.clone());
+        nodeListCopy.add((Node)node4.clone());
+        nodeListCopy.add((Node)node5.clone());
+        nodeListCopy.add((Node)node6.clone());
+        nodeListCopy.add((Node)node7.clone());
+        nodeListCopy.add((Node)node8.clone());
+        nodeListCopy.add((Node)node9.clone());
+        nodeListCopy.add((Node)node10.clone());
+         */
 
         // Aggiunta dei nodi alla Lista
         nodeList.add(node0);
@@ -42,6 +57,7 @@ public class MainTest {
 
         // Creazione di un grafo non orientato
         Graph graph = new Graph(nodeList.size(), nodeList);
+        //Graph graphCopy = new Graph(nodeListCopy.size(), nodeListCopy);
 
         // Aggiunta degli archi
         graph.addEdge(0, 1, 2);
@@ -61,6 +77,27 @@ public class MainTest {
         graph.addEdge(8, 5, 4);
         graph.addEdge(10, 5, 4);
         graph.addEdge(10, 9, 8);
+
+/*
+        graphCopy.addEdge(0, 1, 2);
+        graphCopy.addEdge(0, 4, 1);
+        graphCopy.addEdge(1, 2, 1);
+        graphCopy.addEdge(1, 3, 3);
+        graphCopy.addEdge(2, 3, 1);
+        graphCopy.addEdge(3, 4, 7);
+        graphCopy.addEdge(1, 5, 10);
+        graphCopy.addEdge(2, 5, 7);
+        graphCopy.addEdge(2, 9, 3);
+        graphCopy.addEdge(9, 5, 11);
+        graphCopy.addEdge(3, 6, 2);
+        graphCopy.addEdge(4, 7, 3);
+        graphCopy.addEdge(7, 6, 4);
+        graphCopy.addEdge(6, 5, 4);
+        graphCopy.addEdge(8, 5, 4);
+        graphCopy.addEdge(10, 5, 4);
+        graphCopy.addEdge(10, 9, 8);
+
+ */
 
         // Array delle Navette
         Point[] cars = new Point[3];
@@ -97,9 +134,21 @@ public class MainTest {
         // Dimensione del grafo originale/iniziale
         int dimGrph= graph.V;
 
+
+
         // Espando il grfo
         // Array dei range dei nodi aggiunti associati all'i-esimo nodo
         Point[] addNode=graph.expandGraph();
+
+        graph.printGraph();
+
+
+        /*
+        graphCopy.expandGraph();
+        graphCopy= graphCopy.GraphOptimalPath();
+        graphCopy.printGraph();
+        */
+
 
         // Dimensione del grafo esteso
         int dimOG= graph.V;
@@ -107,12 +156,16 @@ public class MainTest {
         // Costruiscoil grafo ottimale dove ogni nodo è unito da un arco il quale costo è il valore del cammino minimo tra di essi nel grafo dato in input
         Graph graphOptimalPath = graph.GraphOptimalPath();
 
+        // Archi del grafo ottimo
+        ArrayList<Edge> inizialEdges= new ArrayList<>();
+        for(Edge edge: graphOptimalPath.getAllEdges())
+            inizialEdges.add((Edge) edge.clone());
+
         // Assegno ai nodi del grafo delle etichette in ordine crescente partendo da 0
         int[] transform= graphOptimalPath.TrnasformGraph();
 
         //graphOptimalPath.printGraph();
         graphOptimalPath.printGraph();
-
 
 
         double[][] cities= new double[graphOptimalPath.V][2];
@@ -148,7 +201,6 @@ public class MainTest {
         }
 
         int Cmax = 10;
-        Random random = new Random();
 
         ArrayList<Edge> edges = graphOptimalPath.getAllEdges();
 
@@ -172,17 +224,46 @@ public class MainTest {
         Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(0,5,0))).findFirst().get());
         Sbest.setValue(Integer.MAX_VALUE);
 
+        for(int i=0; i<10 ; i++) {
+            NC = fcm.runFCM(maxIterations, epsilon);
 
-        RGP rgp= new RGP(NC,CS,Sbest,Cmax,edges,numClusters);
-        Solution S=rgp.run();
+            RGP rgp = new RGP(NC, CS, Sbest, Cmax, edges, numClusters);
+            Solution S = rgp.run();
 
-        System.out.println(S);
+            if(Sbest.value== Integer.MAX_VALUE ||Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges) < Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges))
+                Sbest= S;
 
-        Solution[] solutionTrans=S.transformSolution(addNode, transform,graphOptimalPath.V,numClusters, dimGrph);
+            System.out.println(S);
 
-        for(Solution s: solutionTrans)
-            System.out.println("sol= "+s);
+            ArrayList<Point>[] solutionTrans = S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph);
 
+        }
+
+        System.out.println();
+        System.out.println("Soluzione migliore");
+        System.out.println(Sbest);
+        System.out.println(Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+
+
+
+
+        int val=0;
+        int nodePrec;
+        int nodeNext;
+
+        for(ArrayList<Point> arrayList:Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)){
+            nodePrec= 0;
+            for(Point p:arrayList) {
+                nodeNext= p.x;
+                System.out.print(" ["+nodePrec+", "+nodeNext+"] ");
+                val += graph.optimalValueDijkstra(nodePrec,nodeNext);
+                nodePrec=nodeNext;
+            }
+        }
+
+
+        System.out.println();
+        System.out.println("Val :"+val);
 
     }
 
