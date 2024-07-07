@@ -224,7 +224,7 @@ public class MainTest {
         Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(0,5,0))).findFirst().get());
         Sbest.setValue(Integer.MAX_VALUE);
 
-        for(int i=0; i<10 ; i++) {
+        for(int i=0; i<1 ; i++) {
             NC = fcm.runFCM(maxIterations, epsilon);
 
             RGP rgp = new RGP(NC, CS, Sbest, Cmax, edges, numClusters);
@@ -245,8 +245,7 @@ public class MainTest {
         System.out.println(Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
 
 
-
-
+/*
         int val=0;
         int nodePrec;
         int nodeNext;
@@ -261,10 +260,20 @@ public class MainTest {
             }
         }
 
-
         System.out.println();
         System.out.println("Val :"+val);
+*/
 
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
+
+
+        Solution S = VNS.VNSrun(Sbest, CS, Cmax, maxCitiesPerCluster, addNode, transform, graphOptimalPath.V, numClusters, dimGrph, inizialEdges);
+        System.out.println("valore vecchio Sbest:"+Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+        System.out.println("valore nuovo Sbest:"+Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
     }
 
 }

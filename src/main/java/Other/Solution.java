@@ -5,7 +5,7 @@ import Graph.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Solution {
+public class Solution implements Cloneable {
     public ArrayList<Edge> edges;
     public float value;
 
@@ -118,7 +118,7 @@ public class Solution {
 
         }
 
-        System.out.println("Soluzione pre trasformazioe");
+        //System.out.println("Soluzione pre trasformazioe");
 
         for(ArrayList<Integer> arrayList: sequenceSol){
             System.out.println();
@@ -129,7 +129,7 @@ public class Solution {
         System.out.println();
 
 
-        System.out.println("Soluzione post trasformazioe");
+        //System.out.println("Soluzione post trasformazioe");
 
         // pre trasformale la soluzione per il grafo iniziale
         ArrayList<Point>[] sequenceSolTra = new ArrayList[numC];
@@ -172,6 +172,7 @@ public class Solution {
             sequenceSolTra[i].add(new Point(0,1));
         }
 
+        /*
         for(ArrayList<Point> arrayList: sequenceSolTra){
             System.out.println();
             for(Point i: arrayList){
@@ -179,6 +180,8 @@ public class Solution {
             }
         }
         System.out.println();
+
+         */
 
         return sequenceSolTra;
     }
@@ -194,7 +197,7 @@ public class Solution {
                 nodeNext=(int) solution[i].get(j).getX();
                 int finalNodeNext = nodeNext;
                 int finalNodePrec = nodePrec;
-                System.out.print(" ["+nodePrec+", "+nodeNext+"] ");
+                //System.out.print(" ["+nodePrec+", "+nodeNext+"] ");
                 val+=edges.stream().filter(e -> e.equals(new Edge(finalNodePrec, finalNodeNext,0))).findFirst().get().weight;
                 nodePrec=nodeNext;
             }
@@ -203,4 +206,13 @@ public class Solution {
         return val;
     }
 
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Solution cloned = (Solution) super.clone();
+        cloned.edges = new ArrayList<>();
+        for (Edge edge : this.edges) {
+            cloned.addEdge((Edge) edge.clone());
+        }
+        return cloned;
+    }
 }
