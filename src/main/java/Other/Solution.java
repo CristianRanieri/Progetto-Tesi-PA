@@ -118,7 +118,8 @@ public class Solution implements Cloneable {
 
         }
 
-        //System.out.println("Soluzione pre trasformazioe");
+        /*
+        System.out.println("Soluzione pre trasformazioe");
 
         for(ArrayList<Integer> arrayList: sequenceSol){
             System.out.println();
@@ -129,7 +130,8 @@ public class Solution implements Cloneable {
         System.out.println();
 
 
-        //System.out.println("Soluzione post trasformazioe");
+        System.out.println("Soluzione post trasformazioe");
+         */
 
         // pre trasformale la soluzione per il grafo iniziale
         ArrayList<Point>[] sequenceSolTra = new ArrayList[numC];

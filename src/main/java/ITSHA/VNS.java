@@ -89,6 +89,7 @@ public class VNS {
 
         }
 
+
         System.out.println("Soluzione pre trasformazioe");
 
         for(ArrayList<Integer> arrayList: sequenceSol){
@@ -111,11 +112,12 @@ public class VNS {
 
         // Selesiono un numero casuale un nodo nel primo tour (t1)
         Random random= new Random();
+        int tour0= random.nextInt(0, numC);
 
-        if(sequenceSol[0].size()-2>1) {
-            int randomInt= random.nextInt(1, sequenceSol[0].size() - 2);
-            int t1= sequenceSol[0].get(randomInt);
-            int t0= sequenceSol[0].get(randomInt+1);
+        if(sequenceSol[tour0].size()-2>1) {
+            int randomInt= random.nextInt(1, sequenceSol[tour0].size() - 2);
+            int t1= sequenceSol[tour0].get(randomInt);
+            int t0= sequenceSol[tour0].get(randomInt+1);
             int t3=-1;
 
             for(int t2: CS[t1]){
@@ -139,7 +141,7 @@ public class VNS {
 
                     // Prima meta del tuor 0, dal nodo 0 a t1
                     for(int i=0; i<= randomInt; i++)
-                        sequenceSolTemp[0].add(sequenceSol[0].get(i));
+                        sequenceSolTemp[tour0].add(sequenceSol[tour0].get(i));
 
                     // Seconda meta del tour 0, dal nodo t2 a 0, revers del tour che contiene t2
                     int indexT2 = 0;
@@ -149,19 +151,19 @@ public class VNS {
                     }
 
                     for(int i=indexT2; i>=0; i--)
-                        sequenceSolTemp[0].add(sequenceSol[tour].get(i));
+                        sequenceSolTemp[tour0].add(sequenceSol[tour].get(i));
 
                     // Prima meta del tour che contiene t2, da 0 a t0, revers del tour 0
-                    for(int i=sequenceSol[0].size()-1;i>= randomInt+1;i--)
-                        sequenceSolTemp[tour].add(sequenceSol[0].get(i));
+                    for(int i=sequenceSol[tour0].size()-1;i>= randomInt+1;i--)
+                        sequenceSolTemp[tour].add(sequenceSol[tour0].get(i));
 
                     // Seconda meta del tour che contiene t2, da t3 a 0, tuor che contiene t2
                     for(int i=indexT2+1;i<sequenceSol[tour].size();i++)
                         sequenceSolTemp[tour].add(sequenceSol[tour].get(i));
 
                     // Aggiungo tutti gli altri nodi
-                    for(int i=1; i<numC; i++){
-                        if(i!=tour)
+                    for(int i=0; i<numC; i++){
+                        if(i!=tour && i!=tour0)
                             sequenceSolTemp[i]=sequenceSol[i];
                     }
 

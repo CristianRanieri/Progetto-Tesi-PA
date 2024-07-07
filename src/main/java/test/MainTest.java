@@ -274,6 +274,16 @@ public class MainTest {
         Solution S = VNS.VNSrun(Sbest, CS, Cmax, maxCitiesPerCluster, addNode, transform, graphOptimalPath.V, numClusters, dimGrph, inizialEdges);
         System.out.println("valore vecchio Sbest:"+Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
         System.out.println("valore nuovo Sbest:"+Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+
+
+        Sbest=S;
+        for(ArrayList<Point> arrayList:Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)) {
+            for (Point p : arrayList) {
+                System.out.print(" [" + p.x + ", " + p.y + "] ");
+            }
+            System.out.println();
+        }
+
     }
 
 }
