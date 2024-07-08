@@ -14,11 +14,19 @@ public class VNS {
     public static Solution VNSrun(Solution S, ArrayList<Integer>[] CS, int Cmax, int[] p, Point[] range, int[] transform, int numNode, int numC, int dimGraph, ArrayList<Edge> edges) throws CloneNotSupportedException {
         S= (Solution) S.clone();
         Solution Sold= (Solution) S.clone();
+        double valS,valSold;
 
         do {
             Sold = VNS.Insert(Sold, CS, Cmax, p, range, transform, numNode, numC, dimGraph, edges);
             S = VNS.O_Pt(Sold, CS, Cmax, p, range, transform, numNode, numC, dimGraph, edges);
-        }while (Solution.valueSolutionTransformed(S.transformSolution(range, transform, numNode, numC, dimGraph), edges)!=Solution.valueSolutionTransformed(Sold.transformSolution(range, transform, numNode, numC, dimGraph), edges));
+
+            valS= Solution.valueSolutionTransformed(S.transformSolution(range, transform, numNode, numC, dimGraph), edges);
+            valSold= Solution.valueSolutionTransformed(S.transformSolution(range, transform, numNode, numC, dimGraph), edges);
+
+            if(valS < valSold)
+                Sold=S;
+
+        }while (valS != valSold);
 
         return S;
     }

@@ -239,7 +239,7 @@ public class MainTest {
         }
 
         Solution S= (Solution) Sbest.clone();
-        for(int i=0; i<10;i++) {
+        for(int i=0; i<1;i++) {
 
             System.out.println();
             System.out.println("Soluzione migliore");
