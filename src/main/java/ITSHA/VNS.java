@@ -5,6 +5,8 @@ import Other.Solution;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Random;
 
 public class VNS {
@@ -18,97 +20,17 @@ public class VNS {
     }
 
     private static Solution O_Pt(Solution Sold, ArrayList<Integer>[] CS, int Cmax, int[] p,Point[] range,int[] transform, int numNode, int numC, int dimGraph, ArrayList<Edge> edges) throws CloneNotSupportedException {
-        Solution[] solutionTrans= new Solution[numC];
-        for(int i=0;i<numC;i++)
-            solutionTrans[i]= new Solution();
 
-        ArrayList<Node> node= new ArrayList<>();
-        for(int i=0;i<numNode;i++)
-            node.add(new Node(i,0));
+        // Genero la sequenza dei nodi dei tour della soluzione
+        ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range,transform,numNode,numC,dimGraph);
 
-        ArrayList<EdgeLinkedList> edgeVisited= new ArrayList<>();
-
-        Graph graph = new Graph(numNode,node);
-        for(Edge edge: Sold.edges)
-            graph.addEdge(edge.node1,edge.node2,edge.weight);
-
-        // Nodo di partenza
-        int nodeNext;
-        int nodePre = -1;
-        boolean find=false;
-
-        for(int i=0;i<numC;i++){
-            nodeNext=-1;
-            find=false;
-
-            for(EdgeLinkedList edge: graph.adjList[0]){
-                if(!edgeVisited.contains(edge) && !find){
-                    nodeNext=edge.destination;
-                    edgeVisited.add(edge);
-                    solutionTrans[i].edges.add(new Edge(0,nodeNext,edge.weight));
-                    nodePre=0;
-                    find=true;
-                }
-            }
-
-            // esiste ancora un arco che parte da 0 non visitato
-            if(nodeNext!=-1){
-                do{
-                    int finalNodePre = nodePre;
-                    EdgeLinkedList edgeNext= graph.adjList[nodeNext].stream().filter(x-> x.destination!= finalNodePre).toList().get(0);
-
-                    nodePre=nodeNext;
-                    nodeNext= edgeNext.destination;
-
-                    if(nodeNext==0) {
-                        int finalNodePre1 = nodePre;
-                        edgeVisited.add(graph.adjList[0].stream().filter(x-> x.destination== finalNodePre1).toList().get(0));
-                    }
-
-                    solutionTrans[i].edges.add(new Edge(nodeNext,nodePre,graph.adjList[nodeNext].getFirst().weight));
-                }while (nodeNext!=0);
-
-            }
-        }
-
-        ArrayList<Integer>[] sequenceSol = new ArrayList[numC];
-        for(int i=0;i<numC;i++) {
-            sequenceSol[i] = new ArrayList<>();
-            sequenceSol[i].add(0);
-
-            int prec=0;
-            for(Edge e: solutionTrans[i].edges){
-                if(e.node1!=prec){
-                    sequenceSol[i].add(e.node1);
-                    prec=e.node1;
-                }else if(e.node2!=prec){
-                    sequenceSol[i].add(e.node2);
-                    prec=e.node2;
-                }
-            }
-
-        }
-
-
-        System.out.println("Soluzione pre trasformazioe");
-
-        for(ArrayList<Integer> arrayList: sequenceSol){
-            System.out.println();
-            for(Integer i: arrayList){
-                System.out.print(" "+i+"-");
-            }
-        }
-        System.out.println();
-
-        for(Solution sol: solutionTrans){
-            System.out.println(sol);
-        }
 
 
         // Nuova sequenza della solzuione
         ArrayList<Integer>[] sequenceSolTemp = new ArrayList[numC];
 
-
+        // Soluzione migliore
+        Solution Sbest= (Solution) Sold.clone();
 
         // Selesiono un numero casuale un nodo nel primo tour (t1)
         Random random= new Random();
@@ -125,7 +47,7 @@ public class VNS {
 
                 for(int i=1;i<numC;i++){
                     for(int j=1;j<sequenceSol[i].size()-2;j++){
-                        if(sequenceSol[i].get(j)==t2){
+                        if(sequenceSol[i].get(j)==t2 && i!=tour0){
                             tour = i;
                             t3= sequenceSol[i].get(j+1);
                             break;
@@ -139,11 +61,11 @@ public class VNS {
                     for(int i=0;i<numC;i++)
                         sequenceSolTemp[i] = new ArrayList<>();
 
-                    // Prima meta del tuor 0, dal nodo 0 a t1
+                    // Prima meta del tuor0, dal nodo 0 a t1
                     for(int i=0; i<= randomInt; i++)
                         sequenceSolTemp[tour0].add(sequenceSol[tour0].get(i));
 
-                    // Seconda meta del tour 0, dal nodo t2 a 0, revers del tour che contiene t2
+                    // Seconda meta del tour0, dal nodo t2 a 0, revers del tour che contiene t2
                     int indexT2 = 0;
                     for(int i=1;i<sequenceSol[tour].size();i++){
                         if(sequenceSol[tour].get(i)==t2)
@@ -199,7 +121,7 @@ public class VNS {
 
                         System.out.println(tempSolution);
 
-                        if(Solution.valueSolutionTransformed(tempSolution.transformSolution(range, transform, numNode, numC, dimGraph), edges) < Solution.valueSolutionTransformed(Sold.transformSolution(range, transform, numNode, numC, dimGraph), edges)) {
+                        if(Solution.valueSolutionTransformed(tempSolution.transformSolution(range, transform, numNode, numC, dimGraph), edges) < Solution.valueSolutionTransformed(Sbest.transformSolution(range, transform, numNode, numC, dimGraph), edges)) {
                             System.out.println();
                             System.out.println();
                             System.out.println();
@@ -207,13 +129,14 @@ public class VNS {
                             System.out.println();
                             System.out.println();
                             System.out.println();
-                            return tempSolution;
+
+                            Sbest = tempSolution;
                         }
                     }
                 }
             }
         }
 
-        return Sold;
+        return Sbest;
     }
 }

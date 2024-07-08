@@ -239,13 +239,34 @@ public class MainTest {
 
         }
 
-        System.out.println();
-        System.out.println("Soluzione migliore");
-        System.out.println(Sbest);
-        System.out.println(Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+        for(int i=0; i<1;i++) {
+
+            System.out.println();
+            System.out.println("Soluzione migliore");
+            System.out.println(Sbest);
+            System.out.println(Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
 
 
-/*
+            Solution S = VNS.VNSrun(Sbest, CS, Cmax, maxCitiesPerCluster, addNode, transform, graphOptimalPath.V, numClusters, dimGrph, inizialEdges);
+            System.out.println("valore vecchio Sbest:" + Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+            System.out.println("valore nuovo Sbest:" + Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+
+
+            Sbest = S;
+            for (ArrayList<Point> arrayList : Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)) {
+                for (Point p : arrayList) {
+                    System.out.print(" [" + p.x + ", " + p.y + "] ");
+                }
+                System.out.println();
+            }
+
+
+            System.out.println();
+            System.out.println();
+            System.out.println();
+            System.out.println();
+        }
+
         int val=0;
         int nodePrec;
         int nodeNext;
@@ -262,27 +283,7 @@ public class MainTest {
 
         System.out.println();
         System.out.println("Val :"+val);
-*/
 
-        System.out.println();
-        System.out.println();
-        System.out.println();
-        System.out.println();
-
-
-
-        Solution S = VNS.VNSrun(Sbest, CS, Cmax, maxCitiesPerCluster, addNode, transform, graphOptimalPath.V, numClusters, dimGrph, inizialEdges);
-        System.out.println("valore vecchio Sbest:"+Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
-        System.out.println("valore nuovo Sbest:"+Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
-
-
-        Sbest=S;
-        for(ArrayList<Point> arrayList:Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)) {
-            for (Point p : arrayList) {
-                System.out.print(" [" + p.x + ", " + p.y + "] ");
-            }
-            System.out.println();
-        }
 
     }
 

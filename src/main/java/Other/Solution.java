@@ -4,6 +4,8 @@ package Other;
 import Graph.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 
 public class Solution implements Cloneable {
     public ArrayList<Edge> edges;
@@ -100,6 +102,17 @@ public class Solution implements Cloneable {
             }
         }
 
+
+        // Ordinamento delle tour per lunghezza
+        Arrays.sort(solutionTrans, new Comparator<Solution>() {
+            @Override
+            public int compare(Solution sol1, Solution sol2) {
+                return Integer.compare(sol2.edges.size(), sol1.edges.size());
+            }
+        });
+
+
+        // Genero la sequenza dei nodi dei tour della soluzione
         ArrayList<Integer>[] sequenceSol = new ArrayList[numC];
         for(int i=0;i<numC;i++) {
             sequenceSol[i] = new ArrayList<>();
@@ -118,7 +131,7 @@ public class Solution implements Cloneable {
 
         }
 
-        /*
+/*
         System.out.println("Soluzione pre trasformazioe");
 
         for(ArrayList<Integer> arrayList: sequenceSol){
@@ -131,7 +144,7 @@ public class Solution implements Cloneable {
 
 
         System.out.println("Soluzione post trasformazioe");
-         */
+ */
 
         // pre trasformale la soluzione per il grafo iniziale
         ArrayList<Point>[] sequenceSolTra = new ArrayList[numC];
@@ -207,6 +220,110 @@ public class Solution implements Cloneable {
 
         return val;
     }
+
+
+    public ArrayList<Integer>[] sequenceSolution(Point[] range,int[] transform, int numNode, int numC, int dimGraph){
+        Solution[] solutionTrans= new Solution[numC];
+        for(int i=0;i<numC;i++)
+            solutionTrans[i]= new Solution();
+
+        ArrayList<Node> node= new ArrayList<>();
+        for(int i=0;i<numNode;i++)
+            node.add(new Node(i,0));
+
+        ArrayList<EdgeLinkedList> edgeVisited= new ArrayList<>();
+
+        Graph graph = new Graph(numNode,node);
+        for(Edge edge: this.edges)
+            graph.addEdge(edge.node1,edge.node2,edge.weight);
+
+        // Nodo di partenza
+        int nodeNext;
+        int nodePre = -1;
+        boolean find=false;
+
+        for(int i=0;i<numC;i++){
+            nodeNext=-1;
+            find=false;
+
+            for(EdgeLinkedList edge: graph.adjList[0]){
+                if(!edgeVisited.contains(edge) && !find){
+                    nodeNext=edge.destination;
+                    edgeVisited.add(edge);
+                    solutionTrans[i].edges.add(new Edge(0,nodeNext,edge.weight));
+                    nodePre=0;
+                    find=true;
+                }
+            }
+
+            // esiste ancora un arco che parte da 0 non visitato
+            if(nodeNext!=-1){
+                do{
+                    int finalNodePre = nodePre;
+                    EdgeLinkedList edgeNext= graph.adjList[nodeNext].stream().filter(x-> x.destination!= finalNodePre).toList().get(0);
+
+                    nodePre=nodeNext;
+                    nodeNext= edgeNext.destination;
+
+                    if(nodeNext==0) {
+                        int finalNodePre1 = nodePre;
+                        edgeVisited.add(graph.adjList[0].stream().filter(x-> x.destination== finalNodePre1).toList().get(0));
+                    }
+
+                    solutionTrans[i].edges.add(new Edge(nodeNext,nodePre,graph.adjList[nodeNext].getFirst().weight));
+                }while (nodeNext!=0);
+
+            }
+        }
+
+
+        // Ordinamento delle tour per lunghezza
+        Arrays.sort(solutionTrans, new Comparator<Solution>() {
+            @Override
+            public int compare(Solution sol1, Solution sol2) {
+                return Integer.compare(sol2.edges.size(), sol1.edges.size());
+            }
+        });
+
+
+        // Genero la sequenza dei nodi dei tour della soluzione
+        ArrayList<Integer>[] sequenceSol = new ArrayList[numC];
+        for(int i=0;i<numC;i++) {
+            sequenceSol[i] = new ArrayList<>();
+            sequenceSol[i].add(0);
+
+            int prec=0;
+            for(Edge e: solutionTrans[i].edges){
+                if(e.node1!=prec){
+                    sequenceSol[i].add(e.node1);
+                    prec=e.node1;
+                }else if(e.node2!=prec){
+                    sequenceSol[i].add(e.node2);
+                    prec=e.node2;
+                }
+            }
+
+        }
+
+
+        System.out.println("Soluzione pre trasformazioe");
+
+        for(ArrayList<Integer> arrayList: sequenceSol){
+            System.out.println();
+            for(Integer i: arrayList){
+                System.out.print(" "+i+"-");
+            }
+        }
+        System.out.println();
+
+        for(Solution sol: solutionTrans){
+            System.out.println(sol);
+        }
+
+        return sequenceSol;
+    }
+
+
 
     @Override
     public Object clone() throws CloneNotSupportedException {
