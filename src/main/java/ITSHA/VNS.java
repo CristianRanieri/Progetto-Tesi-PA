@@ -2,11 +2,8 @@ package ITSHA;
 
 import Graph.*;
 import Other.Solution;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Random;
 
 public class VNS {
@@ -21,7 +18,7 @@ public class VNS {
             S = VNS.O_Pt(Sold, CS, Cmax, p, range, transform, numNode, numC, dimGraph, edges);
 
             valS= Solution.valueSolutionTransformed(S.transformSolution(range, transform, numNode, numC, dimGraph), edges);
-            valSold= Solution.valueSolutionTransformed(S.transformSolution(range, transform, numNode, numC, dimGraph), edges);
+            valSold= Solution.valueSolutionTransformed(Sold.transformSolution(range, transform, numNode, numC, dimGraph), edges);
 
             if(valS < valSold)
                 Sold=S;
@@ -33,9 +30,12 @@ public class VNS {
 
     private static Solution O_Pt(Solution Sold, ArrayList<Integer>[] CS, int Cmax, int[] p,Point[] range,int[] transform, int numNode, int numC, int dimGraph, ArrayList<Edge> edges) throws CloneNotSupportedException {
 
+        System.out.println();
+        System.out.println("Iniszio iterazione Two_pt");
+        System.out.println();
+
         // Genero la sequenza dei nodi dei tour della soluzione
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range,transform,numNode,numC,dimGraph);
-
 
 
         // Nuova sequenza della solzuione
@@ -154,6 +154,11 @@ public class VNS {
 
 
     private static Solution Insert(Solution Sold, ArrayList<Integer>[] CS, int Cmax, int[] p,Point[] range,int[] transform, int numNode, int numC, int dimGraph, ArrayList<Edge> edges) throws CloneNotSupportedException {
+
+        System.out.println();
+        System.out.println("Iniszio iterazione Insert");
+        System.out.println();
+
         // Genero la sequenza dei nodi dei tour della soluzione
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range, transform, numNode, numC, dimGraph);
 
@@ -245,8 +250,6 @@ public class VNS {
                             System.out.println("t2 :"+t2);
                             System.out.println("t3 :"+t3);
                             System.out.println("t5 :"+t5);
-                            System.out.println("indexT3 :"+indexT1);
-                            System.out.println("indexT3 :"+indexT3);
 
                             for(ArrayList<Integer> arrayList: sequenceSolTemp){
                                 System.out.println();
