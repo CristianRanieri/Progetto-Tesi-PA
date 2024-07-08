@@ -86,17 +86,22 @@ public class Solution implements Cloneable {
             if(nodeNext!=-1){
                 do{
                     int finalNodePre = nodePre;
-                    EdgeLinkedList edgeNext= graph.adjList[nodeNext].stream().filter(x-> x.destination!= finalNodePre).toList().get(0);
+                    ArrayList<EdgeLinkedList> edgeList = new ArrayList<EdgeLinkedList>(graph.adjList[nodeNext].stream().filter(x-> x.destination!= finalNodePre).toList());
+                    if(edgeList.size()!=0) {
+                        EdgeLinkedList edgeNext = edgeList.get(0);
 
-                    nodePre=nodeNext;
-                    nodeNext= edgeNext.destination;
+                        nodePre = nodeNext;
+                        nodeNext = edgeNext.destination;
 
-                    if(nodeNext==0) {
-                        int finalNodePre1 = nodePre;
-                        edgeVisited.add(graph.adjList[0].stream().filter(x-> x.destination== finalNodePre1).toList().get(0));
+                        if (nodeNext == 0) {
+                            int finalNodePre1 = nodePre;
+                            edgeVisited.add(graph.adjList[0].stream().filter(x -> x.destination == finalNodePre1).toList().get(0));
+                        }
+
+                        solutionTrans[i].edges.add(new Edge(nodeNext, nodePre, graph.adjList[nodeNext].getFirst().weight));
+                    }else {
+                        nodeNext=0;
                     }
-
-                    solutionTrans[i].edges.add(new Edge(nodeNext,nodePre,graph.adjList[nodeNext].getFirst().weight));
                 }while (nodeNext!=0);
 
             }
@@ -129,6 +134,8 @@ public class Solution implements Cloneable {
                 }
             }
 
+            if(sequenceSol[i].size()==2)
+                sequenceSol[i].add(0);
         }
 
 /*
@@ -260,17 +267,22 @@ public class Solution implements Cloneable {
             if(nodeNext!=-1){
                 do{
                     int finalNodePre = nodePre;
-                    EdgeLinkedList edgeNext= graph.adjList[nodeNext].stream().filter(x-> x.destination!= finalNodePre).toList().get(0);
+                    ArrayList<EdgeLinkedList> edgeList = new ArrayList<EdgeLinkedList>(graph.adjList[nodeNext].stream().filter(x-> x.destination!= finalNodePre).toList());
+                    if(edgeList.size()!=0) {
+                        EdgeLinkedList edgeNext = edgeList.get(0);
 
-                    nodePre=nodeNext;
-                    nodeNext= edgeNext.destination;
+                        nodePre = nodeNext;
+                        nodeNext = edgeNext.destination;
 
-                    if(nodeNext==0) {
-                        int finalNodePre1 = nodePre;
-                        edgeVisited.add(graph.adjList[0].stream().filter(x-> x.destination== finalNodePre1).toList().get(0));
+                        if (nodeNext == 0) {
+                            int finalNodePre1 = nodePre;
+                            edgeVisited.add(graph.adjList[0].stream().filter(x -> x.destination == finalNodePre1).toList().get(0));
+                        }
+
+                        solutionTrans[i].edges.add(new Edge(nodeNext, nodePre, graph.adjList[nodeNext].getFirst().weight));
+                    }else {
+                        nodeNext=0;
                     }
-
-                    solutionTrans[i].edges.add(new Edge(nodeNext,nodePre,graph.adjList[nodeNext].getFirst().weight));
                 }while (nodeNext!=0);
 
             }
@@ -303,6 +315,8 @@ public class Solution implements Cloneable {
                 }
             }
 
+            if(sequenceSol[i].size()==2)
+                sequenceSol[i].add(0);
         }
 
 

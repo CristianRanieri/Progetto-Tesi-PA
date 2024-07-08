@@ -25,8 +25,8 @@ public class MainTest {
         Node node6 = new Node(6, 2, 10.0, 2.0);
         Node node7 = new Node(7, 0, 9.0, 3.0);
         Node node8 = new Node(8, 0, 91.0, 3.);
-        Node node9 = new Node(9, 1, 12.1,5.7);
-        Node node10 = new Node(10, 1, 4.2,1.4);
+        Node node9 = new Node(9, 5, 12.1,5.7);
+        Node node10 = new Node(10, 5, 4.2,1.4);
 
         /*
         nodeListCopy.add((Node)node0.clone());
@@ -100,10 +100,9 @@ public class MainTest {
  */
 
         // Array delle Navette
-        Point[] cars = new Point[3];
+        Point[] cars = new Point[2];
         cars[0] = new Point(1, 6);
         cars[1] = new Point(6, 4);
-        cars[2] = new Point(10, 4);
 
 
         /*
@@ -178,7 +177,7 @@ public class MainTest {
         double weightingExponent = 2.0;
         int maxIterations = 100;
         double epsilon = 0.01;
-        int[] maxCitiesPerCluster = {7,7,3}; // Esempio di numero massimo di città per ciascun cluster
+        int[] maxCitiesPerCluster = {12,12}; // Esempio di numero massimo di città per ciascun cluster
 
         FuzzyCMeans fcm = new FuzzyCMeans(numClusters, cities.length, cities, weightingExponent, maxCitiesPerCluster);
         int[] NC = fcm.runFCM(maxIterations, epsilon);
@@ -189,18 +188,18 @@ public class MainTest {
 
 
 
-        ArrayList<Integer>[] CS = new ArrayList[15];
-        for (int i = 0; i < 15; i++) {
+        ArrayList<Integer>[] CS = new ArrayList[23];
+        for (int i = 0; i < 23; i++) {
             CS[i] = new ArrayList<>();
-            while (CS[i].size() < 10) {
-                int randVal = new Random().nextInt(0,15);
+            while (CS[i].size() < 22) {
+                int randVal = new Random().nextInt(0,23);
                 if (!CS[i].contains(randVal) && randVal != i) {
                     CS[i].add(randVal);
                 }
             }
         }
 
-        int Cmax = 10;
+        int Cmax = 22;
 
         ArrayList<Edge> edges = graphOptimalPath.getAllEdges();
 
@@ -239,7 +238,8 @@ public class MainTest {
 
         }
 
-        for(int i=0; i<1;i++) {
+        Solution S= (Solution) Sbest.clone();
+        for(int i=0; i<10;i++) {
 
             System.out.println();
             System.out.println("Soluzione migliore");
@@ -247,25 +247,26 @@ public class MainTest {
             System.out.println(Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
 
 
-            Solution S = VNS.VNSrun(Sbest, CS, Cmax, maxCitiesPerCluster, addNode, transform, graphOptimalPath.V, numClusters, dimGrph, inizialEdges);
-            System.out.println("valore vecchio Sbest:" + Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
-            System.out.println("valore nuovo Sbest:" + Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+            S = VNS.VNSrun(S, CS, Cmax, maxCitiesPerCluster, addNode, transform, graphOptimalPath.V, numClusters, dimGrph, inizialEdges);
+        }
 
+        System.out.println("valore vecchio Sbest:" + Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+        System.out.println("valore nuovo Sbest:" + Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
 
-            Sbest = S;
-            for (ArrayList<Point> arrayList : Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)) {
-                for (Point p : arrayList) {
-                    System.out.print(" [" + p.x + ", " + p.y + "] ");
-                }
-                System.out.println();
+        Sbest = S;
+        for (ArrayList<Point> arrayList : Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)) {
+            for (Point p : arrayList) {
+                System.out.print(" [" + p.x + ", " + p.y + "] ");
             }
-
-
-            System.out.println();
-            System.out.println();
-            System.out.println();
             System.out.println();
         }
+
+
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+
 
         int val=0;
         int nodePrec;
