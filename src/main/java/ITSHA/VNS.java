@@ -538,6 +538,44 @@ public class VNS {
         }
         return S;
    }
+
+   public static void Adjust_Candidates(ArrayList<Integer>[] CS, Solution S, Solution Sbetter){
+        int i,j;
+
+        for(Edge e1: S.edges){
+            for(Edge e2: Sbetter.edges){
+                // Controllo se i due archi sono uguali
+                if(e1.equals(e2)){
+                    i= e1.node1;
+                    j= e1.node2;
+                    // Controllo se j appartiene a CS[i]
+                    if(!CS[i].contains(j)) {
+                        /*
+                        for (Integer c: CS[i]) {
+                            System.out.print(c+", ");
+                        }
+                         */
+
+                        // Rimuovo il l'ultimo elemento di CS[i]
+                        CS[i].remove(CS[i].get(CS[i].size() - 1));
+
+                        // Aggiungi j all'ultima posizione di CS[i]
+                        CS[i].add(CS[i].size(), j);
+
+                        /*
+                        System.out.println();
+                        System.out.println("dopo la tra");
+                        for (Integer c: CS[i]) {
+                            System.out.print(c+", ");
+                        }
+                        System.out.println();
+                        System.out.println();
+                         */
+                    }
+                }
+            }
+        }
+   }
 }
 
 
