@@ -19,7 +19,6 @@ public class Solution implements Cloneable {
     public void addEdge(Edge edge){
         if(edges.stream().filter(x-> x.equals(edge)).toList().size()==0) {
             edges.add(edge);
-            value += edge.getWeight();
         }
     }
 

@@ -204,23 +204,6 @@ public class MainTest {
         ArrayList<Edge> edges = graphOptimalPath.getAllEdges();
 
         Solution Sbest= new Solution();
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(0,1,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(1,2,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(2,0,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(0,14,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(14,3,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(3,2,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(2,11,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(10,11,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(10,0,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(0,6,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(8,6,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(8,9,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(9,7,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(4,7,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(4,13,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(5,13,0))).findFirst().get());
-        Sbest.addEdge(edges.stream().filter(x->x.equals(new Edge(0,5,0))).findFirst().get());
         Sbest.setValue(Integer.MAX_VALUE);
 
         for(int i=0; i<1 ; i++) {
