@@ -212,7 +212,7 @@ public class MainTest {
             RGP rgp = new RGP(NC, CS, Sbest, Cmax, edges, numClusters);
             Solution S = rgp.run();
 
-            if(Sbest.value== Integer.MAX_VALUE ||Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges) < Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges))
+            if(Sbest.value== Integer.MAX_VALUE || Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges) < Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges))
                 Sbest= S;
 
             System.out.println(S);
@@ -222,7 +222,7 @@ public class MainTest {
         }
 
         Solution S= (Solution) Sbest.clone();
-        for(int i=0; i<1;i++) {
+        for(int i=0; i<0;i++) {
 
             System.out.println();
             System.out.println("Soluzione migliore");
@@ -234,9 +234,12 @@ public class MainTest {
         }
 
         System.out.println("valore vecchio Sbest:" + Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
+
+        Sbest= VNS.Adjust_Solution(S, maxCitiesPerCluster, addNode,transform, graphOptimalPath.V, numClusters, dimGrph,5);
+
         System.out.println("valore nuovo Sbest:" + Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
 
-        Sbest = S;
+        //Sbest = S;
         for (ArrayList<Point> arrayList : Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)) {
             for (Point p : arrayList) {
                 System.out.print(" [" + p.x + ", " + p.y + "] ");
@@ -249,6 +252,7 @@ public class MainTest {
         System.out.println();
         System.out.println();
         System.out.println();
+
 
 
         int val=0;
@@ -267,8 +271,6 @@ public class MainTest {
 
         System.out.println();
         System.out.println("Val :"+val);
-
-
     }
 
 }

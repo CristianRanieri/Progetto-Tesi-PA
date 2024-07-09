@@ -476,4 +476,69 @@ public class VNS {
 
         return Sbest;
     }
+
+   public static Solution Adjust_Solution (Solution S, int[] p, Point[] range,int[] transform, int numNode, int numC, int dimGraph, int Ac){
+
+        // Sequenza dei nodi dei tour della soluzione
+        ArrayList<Integer>[] sequenceSol;
+
+        Random randomGen= new Random();
+        int tour0;
+        int tour1;
+        int positionRemoveNode;
+        int positionAddNode;
+
+        for(int i=0 ;i<Ac; i++){
+            // Genero e aggiorno la sequenza dei nodi dei tour della soluzione
+            sequenceSol = S.sequenceSolution(range, transform, numNode, numC, dimGraph);
+
+            // Genero il tour dal quale eliminare il nodo;
+            tour0= randomGen.nextInt(0,numC);
+
+            if(sequenceSol[tour0].size() >= 4) {
+                // Genero la posizione del nodo da eliminare del tour0
+                positionRemoveNode = randomGen.nextInt(1, sequenceSol[tour0].size() - 1);
+
+                // Genero il tour nel quale inserire il nodo
+                tour1= randomGen.nextInt(0,numC);
+
+                // Genero la posizione nel quale inserire il nodo nel nuovo tour1
+                positionAddNode= randomGen.nextInt(0, sequenceSol[tour1].size() - 1);
+
+                if((tour0 != tour1 || positionRemoveNode != positionAddNode+1 && positionRemoveNode != positionAddNode) && (tour0 == tour1 || sequenceSol[tour1].size()-2 < p[tour1])){
+                    // I 2 tour sono diversi e hanno un numero di di posti occupati minore a quelli disponibili oppure
+                    // I 2 tour sono uguali ma i due nodi sono in posizioni diverse
+
+                    // Rimuovo gli archi nel tour0 tra i nodi in posizione PRN-1, PRN e PRN e PRN+1
+                    // Rimuovo l'arco nel tour1 tra i nodi in posizione PAN, PAN+1
+                    int finalTour0 = tour0;
+                    int finalPositionRemoveNode = positionRemoveNode;
+                    int finalTour1 = tour1;
+                    int finalPositionAddNode = positionAddNode;
+                    ArrayList<Integer>[] finalSequenceSol = sequenceSol;
+                    S.edges = new ArrayList<Edge>(S.edges.stream().filter(e -> !e.equals(new Edge(finalSequenceSol[finalTour0].get(finalPositionRemoveNode -1), finalSequenceSol[finalTour0].get(finalPositionRemoveNode),0)) && !e.equals(new Edge(finalSequenceSol[finalTour0].get(finalPositionRemoveNode), finalSequenceSol[finalTour0].get(finalPositionRemoveNode+1) ,0)) && !e.equals(new Edge(finalSequenceSol[finalTour1].get(finalPositionAddNode), finalSequenceSol[finalTour1].get(finalPositionAddNode+1) ,0))).toList());
+
+                    // Aggiungo l'arco nel tour0 tra i nodi PRN-1, PRN+1
+                    S.edges.add(new Edge(sequenceSol[finalTour0].get(finalPositionRemoveNode-1),sequenceSol[finalTour0].get(finalPositionRemoveNode+1),0));
+
+                    // Aggiungo gli archi nel tour1 tra i nodi in posizione PAN, PRN e PAN+1 e PRN
+                    S.edges.add(new Edge(sequenceSol[finalTour1].get(finalPositionAddNode),sequenceSol[finalTour0].get(finalPositionRemoveNode),0));
+                    S.edges.add(new Edge(sequenceSol[finalTour1].get(finalPositionAddNode+1),sequenceSol[finalTour0].get(finalPositionRemoveNode),0));
+
+                    System.out.println();
+                    System.out.println("tour0 :"+ tour0);
+                    System.out.println("tour1 :"+ tour1);
+                    System.out.println("positionRemoveNode :"+ positionRemoveNode);
+                    System.out.println("positionAddNode :"+ positionAddNode);
+                    System.out.println("nodo aggiunto :"+ sequenceSol[tour0].get(positionRemoveNode));
+                    System.out.println();
+                    System.out.println(S);
+                }
+            }
+        }
+        return S;
+   }
 }
+
+
+
