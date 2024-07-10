@@ -67,7 +67,7 @@ public class RGP {
             sc = C[j].getCityIndices().get(random);
 
 
-            //System.out.println("C["+j+"].size prima: "+C[j].getCityIndices().size());
+            System.out.println("C["+j+"].size prima: "+C[j].getCityIndices().size());
 
 
             // Rimuovo la citta random
@@ -75,7 +75,7 @@ public class RGP {
             // Setto che la citta con indice sc è stata selezionata
             Se[sc]=1;
 
-            //System.out.println("C["+j+"].size dopo: "+C[j].getCityIndices().size());
+            System.out.println("C["+j+"].size dopo: "+C[j].getCityIndices().size());
 
             // Current City
             int cc= sc;
@@ -87,7 +87,7 @@ public class RGP {
                 // Città collegate dalla città cc nella soluzione
                 int a1=0,a2=0;
 
-                if(Sbest.getValue()!= Integer.MAX_VALUE){
+                if(Sbest.getValue() != Integer.MAX_VALUE){
                     for(int i=0;i<Sbest.getEdges().size();i++){
                         if(Sbest.getEdges().get(i).getNode2() == cc)
                             a1= Sbest.getEdges().get(i).getNode1();
@@ -103,10 +103,10 @@ public class RGP {
 
                 if(AC.size()==0){
                     for (Integer k : CS[cc])
-                        if(NC[k]==j && Se[k]==0) {
+                        if((NC[k]==j || k==0 ) && Se[k]==0) {
                             AC.add(k);
 
-                            //System.out.println("aggiungo"+k);
+                            System.out.println("aggiungo: "+k);
                         }
                 }
 
@@ -115,11 +115,11 @@ public class RGP {
                         if((NC[k]==j || k==0 ) && Se[k]==0) {
                             AC.add(k);
 
-                            //System.out.println("aggiungo"+k);
+                            System.out.println("aggiungo: "+k);
                         }
                 }
 
-                // Selesiono in modo randomico la Next City
+                // Seleziono in modo randomico la Next City
                 int nc;
 
                 //System.out.println("AC.size="+AC.size());
@@ -130,14 +130,14 @@ public class RGP {
                 Se[nc]= 1;
 
 
-                //System.out.println("C["+j+"].size2 prima: "+C[j].getCityIndices().size());
+                System.out.println("C["+j+"].size2 prima: "+C[j].getCityIndices().size());
 
 
                 // Rimuovo la città con indice nc dal cluster C[j]
                 C[j].getCityIndices().remove((Object)nc);
 
 
-                //System.out.println("C["+j+"].size2 dopo: "+C[j].getCityIndices().size());
+                System.out.println("C["+j+"].size2 dopo: "+C[j].getCityIndices().size());
 
 
                 // Aggiungo il nuovo arco alla soluzione dalla citta cc a nc

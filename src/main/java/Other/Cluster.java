@@ -1,10 +1,9 @@
 package Other;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
 
 public class Cluster {
 
@@ -54,6 +53,9 @@ public class Cluster {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        // Ordinamento decrescente
+        Collections.sort(maxCitiesList, Collections.reverseOrder());
 
         // Convertiamo la lista in un array di interi
         int[] maxCitiesForCluster = new int[maxCitiesList.size()];

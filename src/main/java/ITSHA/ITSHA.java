@@ -162,7 +162,7 @@ public class ITSHA{
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        ArrayList<Point>[] solution = ITSHA.ITSHARun(10,3,30,2,0.0001,5,"nodeListTest1.txt","edgeListTest1.txt","carsListTest1.txt");
+        ArrayList<Point>[] solution = ITSHA.ITSHARun(10,3,300,2,0.0001,5,"nodeListTest1.txt","edgeListTest1.txt","carsListTest1.txt");
 
         boolean b = Solution.verifySolution(solution,"nodeListTest1.txt","carsListTest1.txt");
 

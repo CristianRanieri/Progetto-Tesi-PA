@@ -45,9 +45,14 @@ public class FuzzyCMeans {
             maxDiff = updateMembership();
         }while (maxDiff < epsilon);
 
-        int t;
+
+        int t=-1;
         for(int j = 0; j < numClusters; j++){
-            t=1;
+            // Definisco il valore di t
+            for(int i=1; i< numCities; i++)
+                if(NC[i] == -1)
+                    t=i;
+
             for(int i = 1; i < numCities; i++)
                 if(NC[i]==-1 && membership[i][j] > membership[t][j])
                     t=i;

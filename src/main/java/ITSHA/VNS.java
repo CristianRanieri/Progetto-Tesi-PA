@@ -321,7 +321,7 @@ public class VNS {
         Random random= new Random();
         int tour0= random.nextInt(0, numC);
 
-        if(sequenceSol[tour0].size()-2>=4) {
+        if(sequenceSol[tour0].size()-2 >= 4) {
             int indexT1 = random.nextInt(1, sequenceSol[tour0].size() - 3);
             int t1 = sequenceSol[tour0].get(indexT1);
             int t0 = sequenceSol[tour0].get(indexT1 + 1);
@@ -505,7 +505,8 @@ public class VNS {
                 // Genero la posizione nel quale inserire il nodo nel nuovo tour1
                 positionAddNode= randomGen.nextInt(0, sequenceSol[tour1].size() - 1);
 
-                if((tour0 != tour1 || positionRemoveNode != positionAddNode+1 && positionRemoveNode != positionAddNode) && (tour0 == tour1 || sequenceSol[tour1].size()-2 < p[tour1])){
+                // || positionRemoveNode != positionAddNode+1 && positionRemoveNode != positionAddNode) && (tour0 == tour1 || sequenceSol[tour1].size()-2 < p[tour1])
+                if(tour0 != tour1 && sequenceSol[tour1].size() >= 4 && sequenceSol[tour1].size()-2 < p[tour1]){
                     // I 2 tour sono diversi e hanno un numero di di posti occupati minore a quelli disponibili oppure
                     // I 2 tour sono uguali ma i due nodi sono in posizioni diverse
 
