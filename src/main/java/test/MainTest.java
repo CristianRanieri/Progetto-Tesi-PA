@@ -163,6 +163,9 @@ public class MainTest {
         // Assegno ai nodi del grafo delle etichette in ordine crescente partendo da 0
         int[] transform= graphOptimalPath.TrnasformGraph();
 
+        // Dimensione del grafo esteso
+        int dimGT= graphOptimalPath.V;
+
         //graphOptimalPath.printGraph();
         graphOptimalPath.printGraph();
 
@@ -186,20 +189,10 @@ public class MainTest {
             System.out.println("Citta" + i + ":"+NC[i]);
         }
 
-
-
-        ArrayList<Integer>[] CS = new ArrayList[23];
-        for (int i = 0; i < 23; i++) {
-            CS[i] = new ArrayList<>();
-            while (CS[i].size() < 10) {
-                int randVal = new Random().nextInt(0,23);
-                if (!CS[i].contains(randVal) && randVal != i) {
-                    CS[i].add(randVal);
-                }
-            }
-        }
-
         int Cmax = 10;
+
+        ArrayList<Integer>[] CS = CollectionS.Initialize_Candidates(Cmax, graphOptimalPath);
+
 
         ArrayList<Edge> edges = graphOptimalPath.getAllEdges();
 
@@ -233,7 +226,7 @@ public class MainTest {
 
             S= VNS.Adjust_Solution(S, maxCitiesPerCluster, addNode,transform, graphOptimalPath.V, numClusters, dimGrph,5);
 
-            VNS.Adjust_Candidates(CS, S, Sbest);
+            CollectionS.Adjust_Candidates(CS, S, Sbest);
         }
 
         System.out.println("valore vecchio Sbest:" + Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges));
