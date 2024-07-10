@@ -1,5 +1,7 @@
 package Graph;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Comparator;
 
 public class Node implements Comparator<Node>, Cloneable{
@@ -48,5 +50,27 @@ public class Node implements Comparator<Node>, Cloneable{
         if (node1.cost < node2.cost) return -1;
         if (node1.cost > node2.cost) return 1;
         return 0;
+    }
+
+
+    public static ArrayList<Node> readNodesFromFile(String filePath) {
+        ArrayList<Node> nodeList = new ArrayList<>();
+
+        // Usa FileReader per leggere il file dal percorso assoluto specificato
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                int id = Integer.parseInt(parts[0].trim());
+                int parentId = Integer.parseInt(parts[1].trim());
+                double x = Double.parseDouble(parts[2].trim());
+                double y = Double.parseDouble(parts[3].trim());
+                nodeList.add(new Node(id, parentId, x, y));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return nodeList;
     }
 }

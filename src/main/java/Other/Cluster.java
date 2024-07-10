@@ -1,6 +1,10 @@
 package Other;
 
 import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 
 public class Cluster {
 
@@ -36,5 +40,27 @@ public class Cluster {
                 "label='" + label + '\'' +
                 ", cityIndices=" + cityIndices +
                 '}';
+    }
+
+    public static int[] readMaxCitiesForClusterFromFile(String filePath) {
+        List<Integer> maxCitiesList = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                int value = Integer.parseInt(line.trim());
+                maxCitiesList.add(value);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Convertiamo la lista in un array di interi
+        int[] maxCitiesForCluster = new int[maxCitiesList.size()];
+        for (int i = 0; i < maxCitiesList.size(); i++) {
+            maxCitiesForCluster[i] = maxCitiesList.get(i);
+        }
+
+        return maxCitiesForCluster;
     }
 }

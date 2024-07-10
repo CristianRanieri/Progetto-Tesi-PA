@@ -9,60 +9,16 @@ public class ITSHA{
 
     public static void ITSHARun(int Cmax, int At, int Tmax, double weightingExponent, double epsilon, int Ac) throws CloneNotSupportedException {
         // Lista dei nodi
-        ArrayList<Node> nodeList = new ArrayList<>();
-
-        // Creazione dei nodi
-        Node node0 = new Node(0, -1, 1.0, 2.0);
-        Node node1 = new Node(1, 0, 5.0, 8.0);
-        Node node2 = new Node(2, 2, 8.0, 8.0);
-        Node node3 = new Node(3, 3, 1.0, 0.6);
-        Node node4 = new Node(4, 5, 9.0, 11.0);
-        Node node5 = new Node(5, 0, 8.0, 2.0);
-        Node node6 = new Node(6, 2, 10.0, 2.0);
-        Node node7 = new Node(7, 0, 9.0, 3.0);
-        Node node8 = new Node(8, 0, 91.0, 3.);
-        Node node9 = new Node(9, 5, 12.1,5.7);
-        Node node10 = new Node(10, 5, 4.2,1.4);
-
-        // Aggiunta dei nodi alla Lista
-        nodeList.add(node0);
-        nodeList.add(node1);
-        nodeList.add(node2);
-        nodeList.add(node3);
-        nodeList.add(node4);
-        nodeList.add(node5);
-        nodeList.add(node6);
-        nodeList.add(node7);
-        nodeList.add(node8);
-        nodeList.add(node9);
-        nodeList.add(node10);
+        ArrayList<Node> nodeList = Node.readNodesFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+"nodeListTest1.txt");
 
         // Creazione di un grafo non orientato
         Graph graph = new Graph(nodeList.size(), nodeList);
 
-        // Aggiunta degli archi
-        graph.addEdge(0, 1, 2);
-        graph.addEdge(0, 4, 1);
-        graph.addEdge(1, 2, 1);
-        graph.addEdge(1, 3, 3);
-        graph.addEdge(2, 3, 1);
-        graph.addEdge(3, 4, 7);
-        graph.addEdge(1, 5, 10);
-        graph.addEdge(2, 5, 7);
-        graph.addEdge(2, 9, 3);
-        graph.addEdge(9, 5, 11);
-        graph.addEdge(3, 6, 2);
-        graph.addEdge(4, 7, 3);
-        graph.addEdge(7, 6, 4);
-        graph.addEdge(6, 5, 4);
-        graph.addEdge(8, 5, 4);
-        graph.addEdge(10, 5, 4);
-        graph.addEdge(10, 9, 8);
+        // Aggiunta archi tra i nodi
+        EdgeLinkedList.readEdgesFromFile(graph,System.getProperty("user.dir")+"/src/main/java/test/"+"edgeListTest1.txt");
 
-        // Array delle Navette
-        int[] maxCitiesForCluster = new int[2];
-        maxCitiesForCluster[0] = 12;
-        maxCitiesForCluster[1] = 12;
+        // Inizializzazione array delle Navette/Cluster
+        int[] maxCitiesForCluster = Cluster.readMaxCitiesForClusterFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+"carsListTest1.txt");
 
         // Dimensione del grafo originale/iniziale
         int dimGrph= graph.V;
