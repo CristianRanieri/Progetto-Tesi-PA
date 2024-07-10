@@ -7,18 +7,18 @@ import java.util.ArrayList;
 
 public class ITSHA{
 
-    public static void ITSHARun(int Cmax, int At, int Tmax, double weightingExponent, double epsilon, int Ac) throws CloneNotSupportedException {
+    public static ArrayList<Point>[] ITSHARun(int Cmax, int At, int Tmax, double weightingExponent, double epsilon, int Ac, String fileNameNode, String fileNameEdge, String fileNameCars) throws CloneNotSupportedException {
         // Lista dei nodi
-        ArrayList<Node> nodeList = Node.readNodesFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+"nodeListTest1.txt");
+        ArrayList<Node> nodeList = Node.readNodesFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+fileNameNode);
 
         // Creazione di un grafo non orientato
         Graph graph = new Graph(nodeList.size(), nodeList);
 
         // Aggiunta archi tra i nodi
-        EdgeLinkedList.readEdgesFromFile(graph,System.getProperty("user.dir")+"/src/main/java/test/"+"edgeListTest1.txt");
+        EdgeLinkedList.readEdgesFromFile(graph,System.getProperty("user.dir")+"/src/main/java/test/"+fileNameEdge);
 
         // Inizializzazione array delle Navette/Cluster
-        int[] maxCitiesForCluster = Cluster.readMaxCitiesForClusterFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+"carsListTest1.txt");
+        int[] maxCitiesForCluster = Cluster.readMaxCitiesForClusterFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+fileNameCars);
 
         // Dimensione del grafo originale/iniziale
         int dimGrph= graph.V;
@@ -120,12 +120,15 @@ public class ITSHA{
                 Sbest= S;
         }
 
+        ArrayList<Point>[] finalSolution = Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph);
+
+
         System.out.println();
         System.out.println();
         System.out.println();
         System.out.println();
 
-        for (ArrayList<Point> arrayList : Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)) {
+        for (ArrayList<Point> arrayList : finalSolution) {
             for (Point p : arrayList) {
                 System.out.print(" [" + p.x + ", " + p.y + "] ");
             }
@@ -141,7 +144,8 @@ public class ITSHA{
         int nodePrec;
         int nodeNext;
 
-        for(ArrayList<Point> arrayList:Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph)){
+
+        for(ArrayList<Point> arrayList : finalSolution){
             nodePrec= 0;
             for(Point p:arrayList) {
                 nodeNext= p.x;
@@ -153,9 +157,18 @@ public class ITSHA{
 
         System.out.println();
         System.out.println("Val :"+val);
+
+        return finalSolution;
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        ITSHA.ITSHARun(10,3,30,2,0.0001,5);
+        ArrayList<Point>[] solution = ITSHA.ITSHARun(10,3,30,2,0.0001,5,"nodeListTest1.txt","edgeListTest1.txt","carsListTest1.txt");
+
+        boolean b = Solution.verifySolution(solution,"nodeListTest1.txt","carsListTest1.txt");
+
+        if(b)
+            System.out.println("Verifica risultato: RISULTATO AMMISSIBILE");
+        else
+            System.out.println("Verifica risultato: XX RISULTATO NON AMMISSIBILE XX");
     }
 }

@@ -1,6 +1,5 @@
 package Other;
 
-
 import Graph.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -278,7 +277,6 @@ public class Solution implements Cloneable {
         return solutionTrans;
     }
 
-
     @Override
     public Object clone() throws CloneNotSupportedException {
         Solution cloned = (Solution) super.clone();
@@ -287,5 +285,40 @@ public class Solution implements Cloneable {
             cloned.addEdge((Edge) edge.clone());
         }
         return cloned;
+    }
+
+    public static boolean verifySolution(ArrayList<Point>[] solution, String fileNameNode, String fileNameCars){
+        // Inizializzazione array delle Navette/Cluster
+        int[] maxCitiesForCluster = Cluster.readMaxCitiesForClusterFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+fileNameCars);
+        int[] personFroCluster = new int[maxCitiesForCluster.length];
+
+        for(int i=0;i<maxCitiesForCluster.length;i++)
+            personFroCluster[i] = 0;
+
+        ArrayList<Node> listNodes= Node.readNodesFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+fileNameNode);
+        int[] personForNode = new int[listNodes.size()];
+
+        for(int i=0;i<personForNode.length;i++)
+            personForNode[i]=0;
+
+        int j=0;
+        for (ArrayList<Point> arrayList : solution) {
+            for (Point p : arrayList) {
+                personForNode[p.x] += p.y;
+                if(p.x != 0)
+                    personFroCluster[j] += p.y;
+            }
+            j++;
+        }
+
+        for(int i=1; i < personForNode.length; i++)
+            if(personForNode[i] != listNodes.get(i).type)
+                return false;
+
+        for(int i=0; i < maxCitiesForCluster.length ; i++)
+            if(personFroCluster[i] > maxCitiesForCluster[i])
+                return false;
+
+        return true;
     }
 }
