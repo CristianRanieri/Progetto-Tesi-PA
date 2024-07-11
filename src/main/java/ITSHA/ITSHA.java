@@ -116,7 +116,7 @@ public class ITSHA{
             if(Sbest.value != Integer.MAX_VALUE)
                 CollectionS.Adjust_Candidates(CS, S, Sbest);
 
-            if(Sbest.value== Integer.MAX_VALUE || Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges) < Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges))
+            if(Sbest.value == Integer.MAX_VALUE || Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges) < Solution.valueSolutionTransformed(Sbest.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges))
                 Sbest= S;
         }
 
@@ -164,9 +164,9 @@ public class ITSHA{
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        String directory= "node500_1/";
+        String directory= "node250_2/";
 
-        for(int i=0; i<1; i++) {
+        for(int i=0; i<5; i++) {
 
             ArrayList<Point>[] solution = ITSHA.ITSHARun(10, 3, 1500, 2, 0.0001, 5, directory, "nodeListTest.txt", "edgeListTest.txt", "carsListTest.txt");
 
