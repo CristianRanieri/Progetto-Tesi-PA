@@ -2,9 +2,13 @@ package Other;
 
 import Graph.*;
 import java.awt.*;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public class Solution implements Cloneable {
     public ArrayList<Edge> edges;
@@ -50,7 +54,7 @@ public class Solution implements Cloneable {
         Solution[] solutionTrans= this.solutionTransform(numNode,numC);
 
 
-        // Genero la sequenza dei nodi dei tour della soluzione
+        // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = new ArrayList[numC];
         for(int i=0;i<numC;i++) {
             sequenceSol[i] = new ArrayList<>();
@@ -86,7 +90,7 @@ public class Solution implements Cloneable {
         System.out.println("Soluzione post trasformazioe");
  */
 
-        // pre trasformale la soluzione per il grafo iniziale
+        // pre trasformale la solution per il grafo iniziale
         ArrayList<Point>[] sequenceSolTra = new ArrayList[numC];
         ArrayList<Integer> remove;
 
@@ -166,7 +170,7 @@ public class Solution implements Cloneable {
         Solution[] solutionTrans= this.solutionTransform(numNode,numC);
 
 
-        // Genero la sequenza dei nodi dei tour della soluzione
+        // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = new ArrayList[numC];
         for(int i=0;i<numC;i++) {
             sequenceSol[i] = new ArrayList<>();
@@ -320,5 +324,26 @@ public class Solution implements Cloneable {
                 return false;
 
         return true;
+    }
+
+
+    public static void writeSolutionOnFile(ArrayList<Point>[] solution, String fileName, int val) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.dir")+"/src/main/java/test/"+fileName,true))) {
+            for (ArrayList<Point> arrayList : solution) {
+                for (Point p : arrayList) {
+                    if(p.x==0)
+                        p.y=1;
+                    writer.write(" [" + p.x + ", " + p.y + "] ");
+                }
+                writer.newLine();
+            }
+
+            writer.newLine();
+            writer.write("Val :"+val);
+            writer.newLine();
+            writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

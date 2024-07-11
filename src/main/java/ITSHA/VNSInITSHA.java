@@ -20,7 +20,7 @@ public class VNSInITSHA {
         // Implementazione VNS in ITSHA
         List<Cluster> Sold;
         do {
-            Sold = new ArrayList<>(S); // Salva la soluzione corrente
+            Sold = new ArrayList<>(S); // Salva la solution corrente
 
             // Step 3: Applica l'operatore Insert
             Sold = Insert(Sold, CS, Cmax, p);
@@ -33,14 +33,14 @@ public class VNSInITSHA {
 
         } while (!S.equals(Sold));
 
-        // Output della soluzione finale migliorata
+        // Output della solution finale migliorata
         System.out.println("Soluzione finale migliorata:");
         for (Cluster cluster : S) {
             System.out.println(cluster);
         }
     }
 
-    // Inizializzazione della soluzione iniziale come array di cluster
+    // Inizializzazione della solution iniziale come array di cluster
     public static List<Cluster> initializeSolution() {
         List<Cluster> solution = new ArrayList<>();
 

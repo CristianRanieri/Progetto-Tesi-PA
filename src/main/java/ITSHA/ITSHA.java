@@ -7,18 +7,18 @@ import java.util.ArrayList;
 
 public class ITSHA{
 
-    public static ArrayList<Point>[] ITSHARun(int Cmax, int At, int Tmax, double weightingExponent, double epsilon, int Ac, String fileNameNode, String fileNameEdge, String fileNameCars) throws CloneNotSupportedException {
+    public static ArrayList<Point>[] ITSHARun(int Cmax, int At, int Tmax, double weightingExponent, double epsilon, int Ac, String directory, String fileNameNode, String fileNameEdge, String fileNameCars) throws CloneNotSupportedException {
         // Lista dei nodi
-        ArrayList<Node> nodeList = Node.readNodesFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+fileNameNode);
+        ArrayList<Node> nodeList = Node.readNodesFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+directory+fileNameNode);
 
         // Creazione di un grafo non orientato
         Graph graph = new Graph(nodeList.size(), nodeList);
 
         // Aggiunta archi tra i nodi
-        EdgeLinkedList.readEdgesFromFile(graph,System.getProperty("user.dir")+"/src/main/java/test/"+fileNameEdge);
+        EdgeLinkedList.readEdgesFromFile(graph,System.getProperty("user.dir")+"/src/main/java/test/"+directory+fileNameEdge);
 
         // Inizializzazione array delle Navette/Cluster
-        int[] maxCitiesForCluster = Cluster.readMaxCitiesForClusterFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+fileNameCars);
+        int[] maxCitiesForCluster = Cluster.readMaxCitiesForClusterFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+directory+fileNameCars);
 
         // Dimensione del grafo originale/iniziale
         int dimGrph= graph.V;
@@ -98,17 +98,17 @@ public class ITSHA{
             // Inizializzazione parametri RGP
             rgp =  new RGP(NC, CS, Sbest, Cmax, edges, numClusters);
 
-            // Esecuzione RGP, creazione soluzione iniziale
+            // Esecuzione RGP, creazione solution iniziale
             S = rgp.run();
 
             for(int numT=0; numT < At + 1; numT++){
-                // Modifica della soluzione in modo semi-casuale
+                // Modifica della solution in modo semi-casuale
                 S = VNS.Adjust_Solution(S, maxCitiesForCluster, addNode,transform, graphOptimalPath.V, numClusters, dimGrph,Ac);
 
-                // Algoritmo di miglioramento della soluzione
+                // Algoritmo di miglioramento della solution
                 S = VNS.VNSrun(S, CS, Cmax, maxCitiesForCluster, addNode, transform, graphOptimalPath.V, numClusters, dimGrph, inizialEdges);
 
-                // Impoasto il valore di Sbetter uguale alla soluzione con valore minore
+                // Impoasto il valore di Sbetter uguale alla solution con valore minore
                 if(Sbetter.value == Integer.MAX_VALUE || Solution.valueSolutionTransformed(S.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges) < Solution.valueSolutionTransformed(Sbetter.transformSolution(addNode, transform, graphOptimalPath.V, numClusters, dimGrph), inizialEdges))
                     Sbetter= S;
             }
@@ -158,17 +158,24 @@ public class ITSHA{
         System.out.println();
         System.out.println("Val :"+val);
 
+        Solution.writeSolutionOnFile(finalSolution,directory+"solution",val);
+
         return finalSolution;
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        ArrayList<Point>[] solution = ITSHA.ITSHARun(10,3,300,2,0.0001,5,"nodeListTest1.txt","edgeListTest1.txt","carsListTest1.txt");
+        String directory= "node500_1/";
 
-        boolean b = Solution.verifySolution(solution,"nodeListTest1.txt","carsListTest1.txt");
+        for(int i=0; i<3; i++) {
 
-        if(b)
-            System.out.println("Verifica risultato: RISULTATO AMMISSIBILE");
-        else
-            System.out.println("Verifica risultato: XX RISULTATO NON AMMISSIBILE XX");
+            ArrayList<Point>[] solution = ITSHA.ITSHARun(10, 3, 1200, 2, 0.0001, 5, directory, "nodeListTest.txt", "edgeListTest.txt", "carsListTest.txt");
+
+            boolean b = Solution.verifySolution(solution, directory + "nodeListTest.txt", directory + "carsListTest.txt");
+
+            if (b)
+                System.out.println("Verifica risultato: RISULTATO AMMISSIBILE");
+            else
+                System.out.println("Verifica risultato: XX RISULTATO NON AMMISSIBILE XX");
+        }
     }
 }

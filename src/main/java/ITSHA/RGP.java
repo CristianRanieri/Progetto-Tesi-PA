@@ -12,7 +12,7 @@ public class RGP {
     private int[] NC;
     // Vettore dei vicini di ogni città
     private ArrayList<Integer>[] CS;
-    // Insieme degli archi della soluzione ottima
+    // Insieme degli archi della solution ottima
     private Solution Sbest;
     // Numero massimo di città di ogni cluster
     private int Cmax;
@@ -84,7 +84,7 @@ public class RGP {
                 // Lista di città
                 ArrayList<Integer> AC= new ArrayList<>();
 
-                // Città collegate dalla città cc nella soluzione
+                // Città collegate dalla città cc nella solution
                 int a1=0,a2=0;
 
                 if(Sbest.getValue() != Integer.MAX_VALUE){
@@ -140,7 +140,7 @@ public class RGP {
                 System.out.println("C["+j+"].size2 dopo: "+C[j].getCityIndices().size());
 
 
-                // Aggiungo il nuovo arco alla soluzione dalla citta cc a nc
+                // Aggiungo il nuovo arco alla solution dalla citta cc a nc
                 int finalCc = cc;
                 Edge e= edges.stream().filter(x-> x.equals(new Edge(finalCc,nc,0))).findFirst().get();
                 S.addEdge(e);
@@ -148,7 +148,7 @@ public class RGP {
                 cc=nc;
             }while (C[j].getCityIndices().size()!=0);
 
-            // Aggiungo il nuovo arco alla soluzione dalla citta cc a sc
+            // Aggiungo il nuovo arco alla solution dalla citta cc a sc
             int finalCc1 = cc;
             Edge e= edges.stream().filter(x-> x.equals(new Edge(finalCc1,sc,0))).findFirst().get();
             S.addEdge(e);

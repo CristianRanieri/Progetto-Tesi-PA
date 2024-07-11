@@ -1,8 +1,7 @@
 package Graph;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.util.List;
 
 public class EdgeLinkedList {
     public int destination;
@@ -23,6 +22,17 @@ public class EdgeLinkedList {
                 int destination = Integer.parseInt(parts[1].trim());
                 int weight = Integer.parseInt(parts[2].trim());
                 graph.addEdge(source,destination,weight);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeEdgesToFile(List<Edge> nodeList, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.dir")+"/src/main/java/test/"+fileName))) {
+            for (Edge edge : nodeList) {
+                writer.write(edge.node1 + ", " + edge.node2 + ", " + edge.weight);
+                writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();

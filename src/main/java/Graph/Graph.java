@@ -416,7 +416,7 @@ public class Graph {
             if(node.type > 1)
                 P+= node.type-1;
         }
-        System.out.println("P: "+(V+P));
+        //System.out.println("P: "+(V+P));
 
         // Incremento del numero di nodi del grafo
         this.resize(V+P);
@@ -458,7 +458,7 @@ public class Graph {
                 addNode[i]=null;
         }
 
-        System.out.println("V: "+V);
+       // System.out.println("V: "+V);
         return addNode;
     }
 
@@ -492,6 +492,8 @@ public class Graph {
         this.V=transformedGraph.V;
         this.adjList=transformedGraph.adjList;
         this.nodeList=transformedGraph.nodeList;
+
+        System.out.println("V: "+V);
 
         return transform;
     }

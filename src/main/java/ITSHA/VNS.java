@@ -36,7 +36,7 @@ public class VNS {
         System.out.println("Iniszio iterazione Two_pt");
         System.out.println();
 
-        // Genero la sequenza dei nodi dei tour della soluzione
+        // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range,transform,numNode,numC,dimGraph);
 
 
@@ -71,7 +71,7 @@ public class VNS {
 
                 // t2 Valido
                 if(tour!=-1){
-                    // Resetto la sequenza della nuova soluzione con t1 e t2 scambiati
+                    // Resetto la sequenza della nuova solution con t1 e t2 scambiati
                     for(int i=0;i<numC;i++)
                         sequenceSolTemp[i] = new ArrayList<>();
 
@@ -161,7 +161,7 @@ public class VNS {
         System.out.println("Iniszio iterazione Insert");
         System.out.println();
 
-        // Genero la sequenza dei nodi dei tour della soluzione
+        // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range, transform, numNode, numC, dimGraph);
 
         // Nuova sequenza della solzuione
@@ -308,7 +308,7 @@ public class VNS {
         System.out.println("Iniszio iterazione Swap");
         System.out.println();
 
-        // Genero la sequenza dei nodi dei tour della soluzione
+        // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range, transform, numNode, numC, dimGraph);
 
         // Nuova sequenza della solzuione
@@ -479,7 +479,7 @@ public class VNS {
 
    public static Solution Adjust_Solution (Solution S, int[] p, Point[] range,int[] transform, int numNode, int numC, int dimGraph, int Ac){
 
-        // Sequenza dei nodi dei tour della soluzione
+        // Sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol;
 
         Random randomGen= new Random();
@@ -489,7 +489,7 @@ public class VNS {
         int positionAddNode;
 
         for(int i=0 ;i<Ac; i++){
-            // Genero e aggiorno la sequenza dei nodi dei tour della soluzione
+            // Genero e aggiorno la sequenza dei nodi dei tour della solution
             sequenceSol = S.sequenceSolution(range, transform, numNode, numC, dimGraph);
 
             // Genero il tour dal quale eliminare il nodo;

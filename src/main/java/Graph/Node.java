@@ -1,8 +1,12 @@
 package Graph;
 
+import Other.Cluster;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 
 public class Node implements Comparator<Node>, Cloneable{
     //numero del nodo
@@ -73,4 +77,101 @@ public class Node implements Comparator<Node>, Cloneable{
 
         return nodeList;
     }
+
+    public static void writeNodesToFile(List<Node> nodeList, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.dir")+"/src/main/java/test/"+fileName))) {
+            for (Node node : nodeList) {
+                writer.write(node.label + ", " + node.type + ", " + node.x + ", " + node.y);
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
+    public static void main(String[] args) {
+
+        String directory = "node500_1/";
+
+        //GENERAZIONE NODI
+
+        List<Node> nodeList = new ArrayList<>();
+        nodeList.add(new Node(0,-1, 25.0,25.0));
+
+        Random random= new Random();
+        int type;
+        int totType = 0;
+
+        for(int i = 1; i < 200; i++) {
+
+            if(totType> 500)
+                type=0;
+            else {
+                type = random.nextInt(0, 20);
+
+                if(type <= 10)
+                    type = 0;
+                else
+                    type = random.nextInt(0, 10);
+            }
+
+            totType += type;
+
+            double x = Math.round(random.nextDouble() * 50 * 10) / 10.0; // Genera e approssima alla prima cifra decimale
+            double y = Math.round(random.nextDouble() * 50 * 10) / 10.0;
+
+            nodeList.add(new Node(i,type, x, y));
+        }
+
+        System.out.println("valore type:"+ totType);
+
+        // Scrittura della lista di nodi in un file
+        Node.writeNodesToFile(nodeList, directory+"nodeListTest.txt");
+
+
+
+        //GENERAZIONE ARCHI
+
+        List<Edge> edges = new ArrayList<>();
+
+        for(int i = 0; i < 99; i++) {
+            edges.add(new Edge(i,i+1,random.nextInt(1,15)));
+        }
+
+        for(int i = 0; i < 5000; i++) {
+            int node1 = random.nextInt(0,200);
+            int node2 = random.nextInt(0,200);
+
+            Edge edge= new Edge(node1,node2, random.nextInt(1,15));
+
+            if(edges.stream().filter(e -> e.equals(edge)).toList().isEmpty())
+                edges.add(edge);
+            else
+                i--;
+        }
+
+        EdgeLinkedList.writeEdgesToFile(edges,directory+"edgeListTest.txt");
+
+
+        // GENERAZIONE CLUSTER
+
+        ArrayList<Integer> clusterValues = new ArrayList<>();
+
+        int clusterTotal = 0;
+        int clusterValue;
+
+        while (clusterTotal < totType){
+            clusterValue = random.nextInt(1,15);
+
+            clusterValues.add(clusterValue);
+
+            clusterTotal += clusterValue;
+        }
+
+        Cluster.writeMaxCitiesForClusterToFile(clusterValues, directory+"carsListTest.txt");
+    }
+
 }

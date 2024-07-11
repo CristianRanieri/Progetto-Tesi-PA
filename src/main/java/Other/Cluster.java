@@ -1,9 +1,9 @@
 package Other;
 
+import Graph.Edge;
+
+import java.io.*;
 import java.util.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 
 public class Cluster {
 
@@ -64,5 +64,17 @@ public class Cluster {
         }
 
         return maxCitiesForCluster;
+    }
+
+
+    public static void writeMaxCitiesForClusterToFile(List<Integer> clusterSize, String fileName) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.dir")+"/src/main/java/test/"+fileName))) {
+            for (Integer c : clusterSize) {
+                writer.write(c.toString());
+                writer.newLine();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
