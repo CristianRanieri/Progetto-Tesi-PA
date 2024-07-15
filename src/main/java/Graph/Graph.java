@@ -41,9 +41,9 @@ public class Graph {
 
 
     // Metodo per aggiungere un nodo al grafo, si puo utilizzare solo se prima è stata effetuata una espansione della lista linkata degli archi
-    public void addNode(int lable, int type){
+    public void addNode(int lable, int type, double corX, double corY){
         if(nodeList.stream().filter(x -> x.label==lable).count()==0) {
-            nodeList.add(new Node(lable, type,0));
+            nodeList.add(new Node(lable,type,corX,corY));
         }else {
             throw new RuntimeException("nodo gli esistente");
         }
@@ -409,6 +409,7 @@ public class Graph {
         int Vtemp=V;
         int lastNode;
         Node n=null;
+        double corX = 0,corY =0;
 
         // Determino il numero di nodi da aggiungere.
         int P=0;
@@ -424,8 +425,11 @@ public class Graph {
         for (int i = 0; i < Vtemp; i++) {
             int finalI = i;
 
-            if(!this.nodeList.stream().filter(x -> x.label== finalI).toList().isEmpty())
-                n = this.nodeList.stream().filter(x -> x.label== finalI).toList().get(0);
+            if(!this.nodeList.stream().filter(x -> x.label== finalI).toList().isEmpty()) {
+                n = this.nodeList.stream().filter(x -> x.label == finalI).toList().get(0);
+                corX = n.x;
+                corY = n.y;
+            }
 
             if(n!=null){
                 // Il grafo contiene il nodo con quella etichetta
@@ -436,7 +440,7 @@ public class Graph {
                     // Aggiungo i nodi e gli archi al grafo
                     lastNode=i;
                     for(int j=0; j < n.type-1; j++) {
-                        this.addNode(pos+j,1);
+                        this.addNode(pos+j,1,corX,corY);
                         this.addEdge(lastNode,pos+j,0);
 
                         // Aggiungo tutti gli archi verso il nodo n,lable pure a pos+j
