@@ -94,25 +94,25 @@ public class Node implements Comparator<Node>, Cloneable{
 
     public static void main(String[] args) {
 
-        String directory = "node250_3/";
+        String directory = "node250_4/";
 
         //GENERAZIONE NODI
 
         List<Node> nodeList = new ArrayList<>();
-        nodeList.add(new Node(0,-1, 25.0,25.0));
+        nodeList.add(new Node(0,-1, 50.0,50.0));
 
         Random random= new Random();
         int type;
         int totType = 0;
 
-        for(int i = 1; i < 100; i++) {
+        for(int i = 1; i < 150; i++) {
 
             if(totType> 250)
                 type=0;
             else {
                 type = random.nextInt(0, 20);
 
-                if(type <= 8)
+                if(type <= 10)
                     type = 0;
                 else
                     type = random.nextInt(0, 10);
@@ -137,13 +137,13 @@ public class Node implements Comparator<Node>, Cloneable{
 
         List<Edge> edges = new ArrayList<>();
 
-        for(int i = 0; i < 99; i++) {
+        for(int i = 0; i < 149; i++) {
             edges.add(new Edge(i,i+1,random.nextInt(1,15)));
         }
 
-        for(int i = 0; i < 2000; i++) {
-            int node1 = random.nextInt(0,100);
-            int node2 = random.nextInt(0,100);
+        for(int i = 0; i < 4500; i++) {
+            int node1 = random.nextInt(0,150);
+            int node2 = random.nextInt(0,150);
 
             Edge edge= new Edge(node1,node2, random.nextInt(1,15));
 
@@ -164,7 +164,7 @@ public class Node implements Comparator<Node>, Cloneable{
         int clusterValue;
 
         while (clusterTotal < totType){
-            clusterValue = random.nextInt(1,15);
+            clusterValue = random.nextInt(1,10);
 
             clusterValues.add(clusterValue);
 

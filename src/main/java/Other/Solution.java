@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 
 public class Solution implements Cloneable {
     public ArrayList<Edge> edges;
@@ -342,6 +341,23 @@ public class Solution implements Cloneable {
             writer.write("Val :"+val);
             writer.newLine();
             writer.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void writeSolutionOnFile(Solution solution, String fileName) {
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(System.getProperty("user.dir")+"/src/main/java/test/"+fileName, true))) {
+            for (Edge edge : solution.edges) {
+                writer.write(edge.node1 + ", " + edge.node2 + ", " + edge.weight);
+                writer.newLine();
+            }
+            writer.newLine();
+            writer.write("Val: "+ solution.value);
+            writer.newLine();
+            writer.newLine();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
