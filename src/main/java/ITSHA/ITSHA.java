@@ -165,9 +165,9 @@ public class ITSHA{
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        String directory= "node250_4/";
+        String directory= "node250_2/";
 
-        for(int i=0; i<2; i++) {
+        for(int i=0; i<8; i++) {
 
             ArrayList<Point>[] solution = ITSHA.ITSHARun(10, 3, 30, 2, 0.0001, 5, directory, "nodeListTest.txt", "edgeListTest.txt", "carsListTest.txt");
 
