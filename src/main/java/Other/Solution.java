@@ -190,7 +190,7 @@ public class Solution implements Cloneable {
                 sequenceSol[i].add(0);
         }
 
-
+/*
         System.out.println("Soluzione pre trasformazioe");
 
         for(ArrayList<Integer> arrayList: sequenceSol){
@@ -204,6 +204,7 @@ public class Solution implements Cloneable {
         for(Solution sol: solutionTrans){
             System.out.println(sol);
         }
+ */
 
         return sequenceSol;
     }

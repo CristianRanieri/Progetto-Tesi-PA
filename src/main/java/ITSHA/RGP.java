@@ -63,19 +63,15 @@ public class RGP {
             Random randomGen = new Random();
             int size = C[j].getCityIndices().size();
             int random= randomGen.nextInt(0,size);
+
             // Seleziono in modo randomico una città
             sc = C[j].getCityIndices().get(random);
 
-
-            System.out.println("C["+j+"].size prima: "+C[j].getCityIndices().size());
-
-
             // Rimuovo la citta random
             C[j].getCityIndices().remove((Object)sc);
+
             // Setto che la citta con indice sc è stata selezionata
             Se[sc]=1;
-
-            System.out.println("C["+j+"].size dopo: "+C[j].getCityIndices().size());
 
             // Current City
             int cc= sc;
@@ -105,8 +101,6 @@ public class RGP {
                     for (Integer k : CS[cc])
                         if((NC[k]==j || k==0 ) && Se[k]==0) {
                             AC.add(k);
-
-                            System.out.println("aggiungo: "+k);
                         }
                 }
 
@@ -114,31 +108,18 @@ public class RGP {
                     for (Integer k : C[j].getCityIndices())
                         if((NC[k]==j || k==0 ) && Se[k]==0) {
                             AC.add(k);
-
-                            System.out.println("aggiungo: "+k);
                         }
                 }
 
                 // Seleziono in modo randomico la Next City
                 int nc;
 
-                //System.out.println("AC.size="+AC.size());
-
-
                 random= randomGen.nextInt(0,AC.size());
                 nc= AC.get(random);
                 Se[nc]= 1;
 
-
-                System.out.println("C["+j+"].size2 prima: "+C[j].getCityIndices().size());
-
-
                 // Rimuovo la città con indice nc dal cluster C[j]
                 C[j].getCityIndices().remove((Object)nc);
-
-
-                System.out.println("C["+j+"].size2 dopo: "+C[j].getCityIndices().size());
-
 
                 // Aggiungo il nuovo arco alla solution dalla citta cc a nc
                 int finalCc = cc;

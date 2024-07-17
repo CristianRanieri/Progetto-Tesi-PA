@@ -32,10 +32,6 @@ public class VNS {
 
     private static Solution O_Pt(Solution Sold, ArrayList<Integer>[] CS, int Cmax, int[] p,Point[] range,int[] transform, int numNode, int numC, int dimGraph, ArrayList<Edge> edges) throws CloneNotSupportedException {
 
-        System.out.println();
-        System.out.println("Iniszio iterazione Two_pt");
-        System.out.println();
-
         // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range,transform,numNode,numC,dimGraph);
 
@@ -103,7 +99,7 @@ public class VNS {
                             sequenceSolTemp[i]=sequenceSol[i];
                     }
 
-
+/*
                     System.out.println("Soluzione con:");
                     System.out.println("t1 :"+t1);
                     System.out.println("t0 :"+t0);
@@ -118,7 +114,7 @@ public class VNS {
                     }
                     System.out.println();
                     System.out.println();
-
+ */
 
                     boolean validSolution = true;
                     for(int i=0;i<numC;i++)
@@ -133,17 +129,9 @@ public class VNS {
                         tempSolution.edges.add(new Edge(t1,t2,0));
                         tempSolution.edges.add(new Edge(t0,t3,0));
 
-                        System.out.println(tempSolution);
+                        //System.out.println(tempSolution);
 
                         if(Solution.valueSolutionTransformed(tempSolution.transformSolution(range, transform, numNode, numC, dimGraph), edges) < Solution.valueSolutionTransformed(Sbest.transformSolution(range, transform, numNode, numC, dimGraph), edges)) {
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-                            System.out.println("VALORE CAMBIATO");
-                            System.out.println();
-                            System.out.println();
-                            System.out.println();
-
                             Sbest = tempSolution;
                         }
                     }
@@ -156,10 +144,6 @@ public class VNS {
 
 
     private static Solution Insert(Solution Sold, ArrayList<Integer>[] CS, int Cmax, int[] p,Point[] range,int[] transform, int numNode, int numC, int dimGraph, ArrayList<Edge> edges) throws CloneNotSupportedException {
-
-        System.out.println();
-        System.out.println("Iniszio iterazione Insert");
-        System.out.println();
 
         // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range, transform, numNode, numC, dimGraph);
@@ -244,7 +228,7 @@ public class VNS {
                                 if(i!=tour && i!=tour0)
                                     sequenceSolTemp[i]=sequenceSol[i];
                             }
-
+/*
                             System.out.println("Soluzione con:");
                             System.out.println("t4 :"+t4);
                             System.out.println("t0 :"+t0);
@@ -261,7 +245,7 @@ public class VNS {
                             }
                             System.out.println();
                             System.out.println();
-
+ */
 
                             boolean validSolution = true;
                             for(int i=0;i<numC;i++)
@@ -278,17 +262,9 @@ public class VNS {
                                 tempSolution.edges.add(new Edge(t1,t0,0));
                                 tempSolution.edges.add(new Edge(t2,t3,0));
 
-                                System.out.println(tempSolution);
+                                //System.out.println(tempSolution);
 
                                 if(Solution.valueSolutionTransformed(tempSolution.transformSolution(range, transform, numNode, numC, dimGraph), edges) < Solution.valueSolutionTransformed(Sbest.transformSolution(range, transform, numNode, numC, dimGraph), edges)) {
-                                    System.out.println();
-                                    System.out.println();
-                                    System.out.println();
-                                    System.out.println("VALORE CAMBIATO");
-                                    System.out.println();
-                                    System.out.println();
-                                    System.out.println();
-
                                     Sbest = tempSolution;
                                 }
                             }
@@ -303,10 +279,6 @@ public class VNS {
 
 
     private static Solution Swap(Solution Sold, ArrayList<Integer>[] CS, int Cmax, int[] p,Point[] range,int[] transform, int numNode, int numC, int dimGraph, ArrayList<Edge> edges) throws CloneNotSupportedException {
-
-        System.out.println();
-        System.out.println("Iniszio iterazione Swap");
-        System.out.println();
 
         // Genero la sequenza dei nodi dei tour della solution
         ArrayList<Integer>[] sequenceSol = Sold.sequenceSolution(range, transform, numNode, numC, dimGraph);
@@ -414,7 +386,7 @@ public class VNS {
                                         if(i!=tour && i!=tour0)
                                             sequenceSolTemp[i]=sequenceSol[i];
                                     }
-
+/*
                                     System.out.println("Soluzione con:");
                                     System.out.println("t1 :"+t1);
                                     System.out.println("t0 :"+t0);
@@ -433,7 +405,7 @@ public class VNS {
                                     }
                                     System.out.println();
                                     System.out.println();
-
+ */
 
                                     boolean validSolution = true;
                                     for(int i=0;i<numC;i++)
@@ -452,17 +424,9 @@ public class VNS {
                                         tempSolution.edges.add(new Edge(t3,t4,0));
                                         tempSolution.edges.add(new Edge(t0,t7,0));
 
-                                        System.out.println(tempSolution);
+                                        //System.out.println(tempSolution);
 
                                         if(Solution.valueSolutionTransformed(tempSolution.transformSolution(range, transform, numNode, numC, dimGraph), edges) < Solution.valueSolutionTransformed(Sbest.transformSolution(range, transform, numNode, numC, dimGraph), edges)) {
-                                            System.out.println();
-                                            System.out.println();
-                                            System.out.println();
-                                            System.out.println("VALORE CAMBIATO");
-                                            System.out.println();
-                                            System.out.println();
-                                            System.out.println();
-
                                             Sbest = tempSolution;
                                         }
                                     }
@@ -525,7 +489,7 @@ public class VNS {
                     // Aggiungo gli archi nel tour1 tra i nodi in posizione PAN, PRN e PAN+1 e PRN
                     S.edges.add(new Edge(sequenceSol[finalTour1].get(finalPositionAddNode),sequenceSol[finalTour0].get(finalPositionRemoveNode),0));
                     S.edges.add(new Edge(sequenceSol[finalTour1].get(finalPositionAddNode+1),sequenceSol[finalTour0].get(finalPositionRemoveNode),0));
-
+/*
                     System.out.println();
                     System.out.println("tour0 :"+ tour0);
                     System.out.println("tour1 :"+ tour1);
@@ -534,6 +498,7 @@ public class VNS {
                     System.out.println("nodo aggiunto :"+ sequenceSol[tour0].get(positionRemoveNode));
                     System.out.println();
                     System.out.println(S);
+ */
                 }
             }
         }

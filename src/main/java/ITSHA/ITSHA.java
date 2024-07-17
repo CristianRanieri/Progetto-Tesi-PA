@@ -158,16 +158,16 @@ public class ITSHA{
         System.out.println();
         System.out.println("Val :"+val);
 
-        //if(val <= 5300)
+        if(val < 4700)
             Solution.writeSolutionOnFile(finalSolution,directory+"solution",val);
 
         return finalSolution;
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        String directory= "node250_2/";
+        String directory= "node150_1/";
 
-        for(int i=0; i<8; i++) {
+        while(true) {
 
             ArrayList<Point>[] solution = ITSHA.ITSHARun(10, 3, 30, 2, 0.0001, 5, directory, "nodeListTest.txt", "edgeListTest.txt", "carsListTest.txt");
 

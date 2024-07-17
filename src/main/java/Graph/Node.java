@@ -94,7 +94,7 @@ public class Node implements Comparator<Node>, Cloneable{
 
     public static void main(String[] args) {
 
-        String directory = "node250_4/";
+        String directory = "node150_1/";
 
         //GENERAZIONE NODI
 
@@ -105,9 +105,9 @@ public class Node implements Comparator<Node>, Cloneable{
         int type;
         int totType = 0;
 
-        for(int i = 1; i < 150; i++) {
+        for(int i = 1; i < 100; i++) {
 
-            if(totType> 250)
+            if(totType> 150)
                 type=0;
             else {
                 type = random.nextInt(0, 20);
@@ -137,13 +137,13 @@ public class Node implements Comparator<Node>, Cloneable{
 
         List<Edge> edges = new ArrayList<>();
 
-        for(int i = 0; i < 149; i++) {
+        for(int i = 0; i < 99; i++) {
             edges.add(new Edge(i,i+1,random.nextInt(1,15)));
         }
 
-        for(int i = 0; i < 4500; i++) {
-            int node1 = random.nextInt(0,150);
-            int node2 = random.nextInt(0,150);
+        for(int i = 0; i < 2000; i++) {
+            int node1 = random.nextInt(0,100);
+            int node2 = random.nextInt(0,100);
 
             Edge edge= new Edge(node1,node2, random.nextInt(1,15));
 
@@ -164,7 +164,7 @@ public class Node implements Comparator<Node>, Cloneable{
         int clusterValue;
 
         while (clusterTotal < totType){
-            clusterValue = random.nextInt(1,10);
+            clusterValue = random.nextInt(1,7);
 
             clusterValues.add(clusterValue);
 
