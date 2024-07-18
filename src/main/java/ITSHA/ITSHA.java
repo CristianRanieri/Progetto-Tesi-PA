@@ -158,14 +158,14 @@ public class ITSHA{
         System.out.println();
         System.out.println("Val :"+val);
 
-        if(val < 4700)
+        if(val < 3700)
             Solution.writeSolutionOnFile(finalSolution,directory+"solution",val);
 
         return finalSolution;
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        String directory= "node150_1/";
+        String directory= "node150_2/";
 
         while(true) {
 
