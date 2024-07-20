@@ -165,7 +165,7 @@ public class ITSHA{
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        String directory= "node500_1/";
+        String directory= "node500_2/";
 
         for (int i = 0; i < 5; i++) {
 
@@ -190,6 +190,5 @@ public class ITSHA{
             else
                 System.out.println("Verifica risultato: XX RISULTATO NON AMMISSIBILE XX");
         }
-
     }
 }

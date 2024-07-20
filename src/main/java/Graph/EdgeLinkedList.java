@@ -60,7 +60,7 @@ public class EdgeLinkedList {
 
 
     public static void main(String[] args) {
-        String direcotry= "node500_1/";
+        String direcotry= "node500_2/";
 
         // Lista dei nodi
         ArrayList<Node> nodeList = Node.readNodesFromFile(System.getProperty("user.dir")+"/src/main/java/test/"+direcotry+"nodeListTest.txt");

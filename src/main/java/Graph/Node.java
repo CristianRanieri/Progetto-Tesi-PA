@@ -94,7 +94,7 @@ public class Node implements Comparator<Node>, Cloneable{
 
     public static void main(String[] args) {
 
-        String directory = "node500_1/";
+        String directory = "node500_2/";
 
         //GENERAZIONE NODI
 
@@ -120,8 +120,8 @@ public class Node implements Comparator<Node>, Cloneable{
 
             totType += type;
 
-            double x = Math.round(random.nextDouble() * 100 * 10) / 10.0; // Genera e approssima alla prima cifra decimale
-            double y = Math.round(random.nextDouble() * 100 * 10) / 10.0;
+            double x = Math.round(random.nextDouble() * 200 * 10) / 10.0; // Genera e approssima alla prima cifra decimale
+            double y = Math.round(random.nextDouble() * 200 * 10) / 10.0;
 
             nodeList.add(new Node(i,type, x, y));
         }
@@ -164,7 +164,7 @@ public class Node implements Comparator<Node>, Cloneable{
         int clusterValue;
 
         while (clusterTotal < totType){
-            clusterValue = random.nextInt(1,7);
+            clusterValue = random.nextInt(1,10);
 
             clusterValues.add(clusterValue);
 
