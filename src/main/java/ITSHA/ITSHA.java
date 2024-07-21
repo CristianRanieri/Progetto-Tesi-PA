@@ -167,9 +167,9 @@ public class ITSHA{
     public static void main(String[] args) throws CloneNotSupportedException {
         String directory= "node50_3/";
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
 
-            ArrayList<Point>[] solution = ITSHA.ITSHARun(10, 3, 30, 2, 0.0001, 5, directory, "nodeListTest.txt", "edgeListTest.txt", "carsListTest.txt");
+            ArrayList<Point>[] solution = ITSHA.ITSHARun(10, 3, 1800, 2, 0.0001, 5, directory, "nodeListTest.txt", "edgeListTest.txt", "carsListTest.txt");
 
             boolean b = Solution.verifySolution(solution, directory + "nodeListTest.txt", directory + "carsListTest.txt");
 
@@ -178,5 +178,18 @@ public class ITSHA{
             else
                 System.out.println("Verifica risultato: XX RISULTATO NON AMMISSIBILE XX");
         }
+
+        for (int i = 0; i < 5; i++) {
+
+            ArrayList<Point>[] solution = ITSHA.ITSHARun(10, 3, 7200, 2, 0.0001, 5, directory, "nodeListTest.txt", "edgeListTest.txt", "carsListTest.txt");
+
+            boolean b = Solution.verifySolution(solution, directory + "nodeListTest.txt", directory + "carsListTest.txt");
+
+            if (b)
+                System.out.println("Verifica risultato: RISULTATO AMMISSIBILE");
+            else
+                System.out.println("Verifica risultato: XX RISULTATO NON AMMISSIBILE XX");
+        }
+
     }
 }
